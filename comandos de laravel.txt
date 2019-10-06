@@ -1,0 +1,60 @@
+composer create-project --prefer-dist laravel/laravel proyectolaravel "5.5.*"
+
+php artisan make:migration create_categorias_table
+
+php artisan make:model Categoria
+
+php artisan make:controller CategoriaController --resource
+
+php artisan make:seeder ClientesTableSeeder
+
+php artisan migrate:fresh --seed
+
+php artisan db:seed
+
+php artisan make:auth
+
+php artisan make:middleware Administrador
+
+
+https://github.com/lindell/vue-barcode  //PARA BARCODE
+
+
+
+
+php artisan make:auth
+
+php artisan migrate
+
+php artisan make:model Specialty -mc
+
+
+
+php artisan make:controller PatientController --resource
+
+
+php artisan make:seeder UsersTableSeeder
+
+php artisan migrate:refresh --seed
+
+php artisan db:seed
+
+php artisan make:middleware AdminMiddleware
+
+
+//CORRER npm
+npm run dev
+
+npm run watch
+
+//LARAVEL ECHO
+npm install --save laravel-echo pusher-js
+
+
+GIT
+
+git checkout -b maria
+
+git checkout master
+
+git checkout -b sebastian
