@@ -19,6 +19,7 @@ Route::group(['middleware' =>['guest']], function(){
 Route::group(['middleware' =>['auth']], function(){
     
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('/dashboard', 'DashboardController');
 
     Route::get('/main', function () {
         return view('contenido/contenido');
@@ -39,6 +40,7 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/producto/activar', 'ProductoController@activar');
         Route::get('/producto/buscarProducto', 'ProductoController@buscarProducto');
         Route::get('/producto/listarProducto', 'ProductoController@listarProducto');
+        Route::get('/producto/listarPdf', 'ProductoController@listarPdf')->name('productos_pdf');
     
         Route::get('/proveedor', 'ProveedorController@index');
         Route::post('/proveedor/registrar', 'ProveedorController@store');
@@ -50,6 +52,8 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/compra/desactivar', 'CompraController@desactivar');
         Route::get('/compra/obtenerCabecera', 'CompraController@obtenerCabecera');
         Route::get('/compra/obtenerDetalles', 'CompraController@obtenerDetalles');
+        Route::get('/compra/pdf/{id}', 'CompraController@pdf')->name('compra_pdf');
+
     });
 
     Route::group(['middleware' =>['Vendedor']], function(){
@@ -78,6 +82,8 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/venta/desactivar', 'VentaController@desactivar');
         Route::get('/venta/obtenerCabecera', 'VentaController@obtenerCabecera');
         Route::get('/venta/obtenerDetalles', 'VentaController@obtenerDetalles');
+        Route::get('/venta/pdf/{id}', 'VentaController@pdf')->name('venta_pdf');
+        
     });
 
     Route::group(['middleware' =>['Administrador']], function(){
@@ -97,6 +103,7 @@ Route::group(['middleware' =>['auth']], function(){
         Route::get('/producto/listarProducto', 'ProductoController@listarProducto');
         Route::get('/producto/buscarProductoVenta', 'ProductoController@buscarProductoVenta');
         Route::get('/producto/listarProductoVenta', 'ProductoController@listarProductoVenta');
+        Route::get('/producto/listarPdf', 'ProductoController@listarPdf')->name('productos_pdf');
 
         Route::get('/proveedor', 'ProveedorController@index');
         Route::post('/proveedor/registrar', 'ProveedorController@store');
@@ -108,6 +115,7 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/compra/desactivar', 'CompraController@desactivar');
         Route::get('/compra/obtenerCabecera', 'CompraController@obtenerCabecera');
         Route::get('/compra/obtenerDetalles', 'CompraController@obtenerDetalles');
+        Route::get('/compra/pdf/{id}', 'CompraController@pdf')->name('compra_pdf');
 
         Route::get('/cliente', 'ClienteController@index');
         Route::post('/cliente/registrar', 'ClienteController@store');
@@ -119,6 +127,7 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/venta/desactivar', 'VentaController@desactivar');
         Route::get('/venta/obtenerCabecera', 'VentaController@obtenerCabecera');
         Route::get('/venta/obtenerDetalles', 'VentaController@obtenerDetalles');
+        Route::get('/venta/pdf/{id}', 'VentaController@pdf')->name('venta_pdf');
 
         Route::get('/rol', 'RolController@index');
         Route::get('/rol/selectRol', 'RolController@selectRol');

@@ -22,6 +22,7 @@ class CreateProductosTable extends Migration
             $table->decimal('precio_venta', 11, 2);
             $table->integer('stock');
             $table->boolean('condicion')->default(1);
+            $table->string('imagen', 200)->nullable();
             $table->timestamps();
 
             $table->foreign('idcategoria')->references('id')->on('categorias');

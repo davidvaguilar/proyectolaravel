@@ -12,6 +12,10 @@
           <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'producto', 'registrar')">
             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Producto
           </button>
+
+          <button class="btn btn-success btn-lg" type="button" @click="cargarPdf()">
+            <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Reporte PDF
+          </button>
         </div>
         <div class="card-body">
           <div class="form-group row">
@@ -33,6 +37,7 @@
                 <th>Codigo</th>
                 <th>Precio Venta (USD$)</th>
                 <th>Stock</th>
+                <th>Imagen</th>
                 <th>Estado</th>
                 <th>Editar</th>
                 <th>Cambiar Estado</th>
@@ -46,6 +51,9 @@
                 <td v-text="producto.codigo"></td>
                 <td v-text="producto.precio_venta"></td>
                 <td v-text="producto.stock"></td>
+                <td>
+                  <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="100px" height="100px">
+                </td>
                 <td>
                   <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">
                     <i class="fa fa-check fa-2x"></i> Activo
@@ -149,6 +157,21 @@
                   <input type="number" v-model="stock" class="form-control" placeholder="Nombre del producto">
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Imagen</label>
+                <div class="col-md-9">
+                    <!--poniendo :src se llama a la variable imagen que esta declarada en la propiedad data-->
+                    <!--poner this.imagen=""; en cerrarModal para limpiar el campo ya que aparecia la imagen al registrar un registro-->
+                  <div v-if="tipoAccion==1">
+                    <input type="file" @change="subirImagen" class="form-control" placeholder="">
+                    <img :src="imagen" class="img-responsive" width="100px" height="100px">
+                  </div>
+                  <div v-if="tipoAccion==2">
+                    <input type="file" @change="subirImagen" class="form-control" placeholder="">      
+                    <img :src="imagen"  width="100px" height="100px">                         
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -179,6 +202,7 @@
         nombre: '',
         precio_venta: 0,
         stock: 0,
+        imagen: '',
         arrayProducto: [],
         modal: 0,
         tituloModal: '',
@@ -242,6 +266,9 @@
           console.log(error);
         });
       },
+      cargarPdf(){
+        window.open('http://127.0.0.1:8000/producto/listarPdf','_blank');
+      },
       selectCategoria(){
         let me = this;
         var url = '/categoria/selectCategoria';
@@ -269,7 +296,8 @@
           'codigo': this.codigo,
           'nombre': this.nombre,
           'stock': this.stock,
-          'precio_venta': this.precio_venta
+          'precio_venta': this.precio_venta,
+          'imagen': this.imagen
         }).then(function(response){
           me.cerrarModal();
           me.listarProducto(1, '', 'nombre');
@@ -277,6 +305,17 @@
         .catch(function (error){
           console.log(error);        
         });
+      },
+      subirImagen(e){              
+        let me = this;
+        let file = e.target.files[0];      
+        //console.log(file);
+        let reader = new FileReader();
+        reader.onloadend = (file) => {            
+            //console.log('RESULT', reader.result)
+          me.imagen = reader.result;
+        }
+        reader.readAsDataURL(file);
       },
       actualizarProducto(){
         if( this.validarProducto() ){
@@ -289,6 +328,7 @@
           'nombre': this.nombre,
           'stock': this.stock,
           'precio_venta': this.precio_venta,
+          'imagen': this.imagen,
           'id': this.producto_id
         }).then(function(response){
           me.cerrarModal();
@@ -389,6 +429,9 @@
         if( !this.stock ){
           this.errorMostrarMsjProducto.push("(*)El stock del producto debe ser un numero y no puede estar vacio");
         }
+        if( !this.imagen ){
+          this.errorMostrarMsjProducto.push("(*)Debe subir una imagen");
+        }
         if( this.errorMostrarMsjProducto.length ){
           this.errorProducto = 1;
         }
@@ -403,6 +446,7 @@
         this.nombre = "";
         this.precio_venta = 0;
         this.stock = 0;
+        this.imagen = "";
         this.errorProducto = 0;        
       },
       abrirModal( modelo, accion, data=[] ){
@@ -457,6 +501,7 @@
   }
 
   .mostrar{
+    height: 1000px;  
     display:list-item !important;
     opacity:1 !important;
     position:absolute !important;

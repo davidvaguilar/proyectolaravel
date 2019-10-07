@@ -38,13 +38,13 @@
                 <th>Email</th>
                 <th>Usuario</th>
                 <th>Rol</th>
+                <th>Imagen</th>
                 <th>Editar</th>
                 <th>Estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="usuario in arrayUsuario" :key="usuario.id">
-        
+              <tr v-for="usuario in arrayUsuario" :key="usuario.id">        
                 <td v-text="usuario.nombre"></td>
                 <td v-text="usuario.tipo_documento"></td>
                 <td v-text="usuario.num_documento"></td>
@@ -52,6 +52,9 @@
                 <td v-text="usuario.email"></td>
                 <td v-text="usuario.usuario"></td>          
                 <td v-text="usuario.rol"></td>         
+                <td>
+                  <img :src="'img/usuario/'+usuario.imagen" class="img-responsive" width="100px" height="100px">
+                </td>
                 <td>
                   <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'usuario', 'actualizar', usuario)">
                     <i class="fa fa-edit fa-2x"></i> Editar
@@ -174,7 +177,21 @@
                     <input type="password" v-model="password" class="form-control">                    
                 </div>
               </div>
-
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Imagen</label>
+                <div class="col-md-9">                  
+                    <!--poniendo :src se llama a la variable imagen que esta declarada en la propiedad data-->
+                      <!--poner this.imagen=""; en cerrarModal para limpiar el campo ya que aparecia la imagen al registrar un registro-->
+                  <div v-if="tipoAccion == 1">
+                    <input type="file" @change="subirImagen" class="form-control" placeholder="">
+                    <img :src="imagen" class="img-responsive" width="100px" height="100px">
+                  </div>                   
+                  <div v-if="tipoAccion == 2">
+                    <input type="file" @change="subirImagen" class="form-control" placeholder="">
+                    <img :src="imagen" class="img-responsive" width="100px" height="100px"> 
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -206,6 +223,7 @@
         usuario: '',
         password: '',
         idrol: 0,
+        imagen: '',
         arrayUsuario: [],
         arrayRol: [],
         modal: 0,
@@ -297,7 +315,8 @@
           'email': this.email,
           'usuario': this.usuario,
           'password': this.password,
-          'idrol': this.idrol
+          'idrol': this.idrol,
+          'imagen': this.imagen
         }).then(function(response){
           me.cerrarModal();
           me.listarUsuario(1, '', 'nombre');
@@ -305,6 +324,17 @@
         .catch(function (error){
           console.log(error);        
         });
+      },
+      subirImagen(e){                
+        let me = this;
+        let file = e.target.files[0];
+        console.log(file);
+        let reader = new FileReader();
+        reader.onloadend = (file) => {            
+            //console.log('RESULT', reader.result)
+            me.imagen = reader.result;
+        }
+        reader.readAsDataURL(file);
       },
       actualizarUsuario(){
         if( this.validarUsuario() ){
@@ -321,7 +351,8 @@
           'email': this.email,
           'usuario': this.usuario,
           'password': this.password,
-          'idrol': this.idrol 
+          'idrol': this.idrol,
+          'imagen': this.imagen
         }).then(function(response){
           me.cerrarModal();
           me.listarUsuario(1, '', 'nombre');
@@ -345,6 +376,9 @@
         if( this.idrol == 0 ){
           this.errorMostrarMsjUsuario.push("(*)Debe seleccionar un rol para el usuario");
         }
+        if( this.imagen == 0 ){
+          this.errorMostrarMsjUsuario.push("(*)Debe subir  una imagen");
+        }
         if( this.errorMostrarMsjUsuario.length ){
           this.errorUsuario = 1;
         }
@@ -362,6 +396,7 @@
         this.usuario = '';
         this.password = '';
         this.idrol = 0;
+        this.imagen = '';
         this.errorUsuario = 0;
       },
       abrirModal( modelo, accion, data=[] ){
@@ -501,6 +536,7 @@
   }
 
   .mostrar{
+    height: 1000px;
     display:list-item !important;
     opacity:1 !important;
     position:absolute !important;

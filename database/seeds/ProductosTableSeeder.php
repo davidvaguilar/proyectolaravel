@@ -18,6 +18,7 @@ class ProductosTableSeeder extends Seeder
             'nombre' => 'selecta',
             'precio_venta' => 1000,
             'stock' => 10
+            
         ]);
 
         Producto::create([

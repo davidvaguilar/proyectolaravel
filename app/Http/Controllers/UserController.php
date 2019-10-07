@@ -18,7 +18,7 @@ class UserController extends Controller
                     ->select('users.id','users.nombre', 'users.tipo_documento',
                             'users.num_documento', 'users.direccion', 'users.telefono',
                             'users.email', 'users.usuario', 'users.password',
-                            'users.condicion', 'users.idrol', 'roles.nombre as rol')
+                            'users.condicion', 'users.idrol', 'users.imagen', 'roles.nombre as rol')
                     ->orderBy('id', 'desc')->paginate(3);
             
         } else {
@@ -26,7 +26,7 @@ class UserController extends Controller
                     ->select('users.id','users.nombre', 'users.tipo_documento',
                             'users.num_documento', 'users.direccion', 'users.telefono',
                             'users.email', 'users.usuario', 'users.password',
-                            'users.condicion', 'users.idrol', 'roles.nombre as rol')
+                            'users.condicion', 'users.idrol', 'users.imagen', 'roles.nombre as rol')
                     ->where('users.'.$criterio, 'like', '%'.$buscar.'%')
                     ->orderBy('id', 'desc')->paginate(3);
         }
@@ -57,12 +57,25 @@ class UserController extends Controller
         $usuario->usuario = $request->usuario;
         $usuario->password = bcrypt($request->password);
         $usuario->idrol = $request->idrol;
+        //inicio registrar imagen
+        $exploded = explode(',', $request->imagen);
+        $decoded = base64_decode($exploded[1]);
+        if( str_contains($exploded[0], 'jpeg') ){
+            $extension = 'jpg';
+        } else{
+            $extension = 'png'; 
+        }
+        $fileName= str_random().'.'.$extension;
+        $path = public_path().'/img/usuario/'.$fileName;
+        file_put_contents($path, $decoded);
+        $usuario->imagen = $fileName;
+        //fin registrar imagen
         $usuario->save();
     }
 
     public function update(Request $request)
     {
-        if( !$request->ajax()) return redirect('/');
+        if( !$request->ajax() ) return redirect('/');
         $usuario = User::findOrFail($request->id);
         $usuario->nombre = $request->nombre;
         $usuario->tipo_documento = $request->tipo_documento;
@@ -73,6 +86,28 @@ class UserController extends Controller
         $usuario->usuario = $request->usuario;
         $usuario->password = bcrypt($request->password);
         $usuario->idrol = $request->idrol;
+        //Editar imagen
+        $currentPhoto = $user->imagen; 
+        if( $request->imagen != $currentPhoto ){
+            $exploded = explode(',',$request->imagen);
+            $decoded = base64_decode($exploded[1]);
+            if( str_contains($exploded[0],'jpeg') ){
+                $extension = 'jpg';
+            } else{
+                $extension = 'png'; 
+            }
+            $fileName = str_random().'.'.$extension;
+            $path = public_path().'/img/usuario/'.$fileName;
+            file_put_contents($path, $decoded);
+            /*inicio eliminar del servidor*/
+            $usuarioImagen = public_path('/img/usuario/').$currentPhoto;
+            if( file_exists($usuarioImagen) ){
+                @unlink($usuarioImagen);
+            }
+            /*fin eliminar del servidor*/
+            $user->imagen = $fileName;
+        }
+        //fin editar imagen
         $usuario->save();
     }
 

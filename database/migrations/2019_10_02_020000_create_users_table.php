@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('condicion')->default(1);
             $table->integer('idrol')->unsigned();
             $table->foreign('idrol')->references('id')->on('roles');
+            $table->string('imagen', 200)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Sistema Compras-Ventas con Laravel y Vue Js- webtraining-it.com">
-    <meta name="keyword" content="Sistema Compras-Ventas con Laravel y Vue Js">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="description" content="Sistema Compras-Ventas- dyi.cl">
+    <meta name="keyword" content="Sistema Compras-Ventas">
     <title>Proyecto</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <!-- Icons -->
     <link href="css/plantilla.css" rel="stylesheet">
 </head>
@@ -74,8 +74,8 @@
     </div>   
     </div>
     <footer class="app-footer">
-        <span><a href="http://www.webtraining-it.com/">webtraining-it.com</a> &copy; 2019</span>
-        <span class="ml-auto">Desarrollado por <a href="http://www.webtraining-it.com/">webtraining-it.com</a></span>
+        <span><a href="http://www.dyi.cl/">dyi.cl</a> &copy; 2019</span>
+        <span class="ml-auto">Desarrollado por <a href="http://www.dyi.cl/">dyi.cl</a></span>
     </footer>
 
     <script src="js/app.js"></script>

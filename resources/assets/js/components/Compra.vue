@@ -366,8 +366,9 @@
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
-                    <th>Precio Venta (USD$)</th>
+                    <th>Precio Venta ($)</th>
                     <th>Stock</th>
+                    <th>Imagen</th>
                     <th>Estado</th>
                     <th>Acción</th>
                   </tr>
@@ -379,6 +380,9 @@
                     <td v-text="producto.codigo"></td>
                     <td v-text="producto.precio_venta"></td>
                     <td v-text="producto.stock"></td>
+                    <td>
+                      <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="100px" height="100px">
+                    </td>
                     <td>
                       <button type="button" class="btn btn-success btn-sm" v-if="producto.condicion">
                         <i class="fa fa-unlock"></i>&nbsp;Activo
@@ -547,6 +551,9 @@
         .catch(function (error) {
           console.log(error);
         });
+      },
+      pdfCompra(id){
+        window.open('http://127.0.0.1:8000/compra/pdf/'+id+','+ '_blank');
       },
 
       cambiarPagina(page, buscar, criterio){     

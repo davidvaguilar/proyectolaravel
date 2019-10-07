@@ -15,11 +15,12 @@ class ProductoController extends Controller
 
         if( $buscar == '' ){
             $productos = Producto::join('categorias', 'productos.idcategoria', '=', 'categorias.id')
-                   ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion')
-                   ->orderBy('productos.id', 'desc')->paginate(3);
+                    ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion', 'productos.imagen')
+                    ->orderBy('productos.id', 'desc')->paginate(3);
         } else {
             $productos = Producto::join('categorias', 'productos.idcategoria', '=', 'categorias.id')
-                    ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion')                    ->where('productos.'.$criterio, 'like', '%'.$buscar.'%')
+                    ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion', 'productos.imagen')
+                    ->where('productos.'.$criterio, 'like', '%'.$buscar.'%')
                     ->orderBy('productos.id', 'desc')->paginate(3);
         }
         
@@ -36,6 +37,8 @@ class ProductoController extends Controller
         ];
     }
 
+
+
     public function listarProducto( Request $request ){
         if( !$request->ajax() ) return redirect('/');
         $buscar = $request->buscar;
@@ -43,12 +46,13 @@ class ProductoController extends Controller
 
         if( $buscar == '' ){
             $productos = Producto::join('categorias', 'productos.idcategoria', '=', 'categorias.id')
-                   ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion')
-                   ->orderBy('productos.id', 'desc')->paginate(10);
+                ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion', 'productos.imagen')
+                ->orderBy('productos.id', 'desc')->paginate(10);
         } else {
             $productos = Producto::join('categorias', 'productos.idcategoria', '=', 'categorias.id')
-                    ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion')                    ->where('productos.'.$criterio, 'like', '%'.$buscar.'%')
-                    ->orderBy('productos.id', 'desc')->paginate(10);
+                ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion', 'productos.imagen')                    
+                ->where('productos.'.$criterio, 'like', '%'.$buscar.'%')
+                ->orderBy('productos.id', 'desc')->paginate(10);
         }
         
         return[ 'productos' => $productos ];
@@ -63,20 +67,28 @@ class ProductoController extends Controller
          
         if ($buscar==''){
             $productos = Producto::join('categorias','productos.idcategoria','=','categorias.id')
-            ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion')
+            ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion', 'productos.imagen')
             ->where('productos.stock','>','0')
             ->orderBy('productos.id', 'desc')->paginate(10);
         }
         else{
             $productos = Producto::join('categorias','productos.idcategoria','=','categorias.id')
-            ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion')
+            ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion', 'productos.imagen')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
             ->where('productos.stock','>','0')
             ->orderBy('productos.id', 'desc')->paginate(10);
         }
-         
- 
         return ['productos' => $productos];
+    }
+
+    public function listarPdf(){
+        $productos = Producto::join('categorias', 'productos.idcategoria', '=', 'categorias.id')
+            ->select('productos.id', 'productos.idcategoria', 'productos.codigo', 'productos.nombre', 'categorias.nombre as nombre_categoria', 'productos.precio_venta', 'productos.stock', 'productos.condicion')
+            ->orderBy('productos.nombre', 'desc')->get();
+
+        $cont = Producto::count();
+        $pdf = \PDF::loadView('pdf.productospdf', ['productos' => $productos, 'cont'=> $cont]);
+        return $pdf->download('productos.pdf');
     }
 
     public function buscarProducto(Request $request){
@@ -111,6 +123,20 @@ class ProductoController extends Controller
         $producto->precio_venta = $request->precio_venta;
         $producto->stock = $request->stock;
         $producto->condicion = '1';
+
+        //inicio registrar imagen
+        $exploded = explode(',', $request->imagen);
+        $decoded = base64_decode($exploded[1]);
+        if( str_contains($exploded[0], 'jpeg') ){
+            $extension = 'jpg';
+        } else{
+            $extension = 'png'; 
+        }
+        $fileName = str_random().'.'.$extension;
+        $path = public_path().'/img/producto/'.$fileName;
+        file_put_contents($path,$decoded);
+        $producto->imagen = $fileName;
+        //fin registrar imagen
         $producto->save();
     }
 
@@ -123,6 +149,29 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->precio_venta = $request->precio_venta;
         $producto->stock = $request->stock;
+
+        //Editar imagen
+        $currentPhoto = $producto->imagen; 
+        if( $request->imagen != $currentPhoto ){
+            $exploded = explode(',',$request->imagen);
+            $decoded = base64_decode($exploded[1]);
+            if( str_contains($exploded[0], 'jpeg') ){
+                $extension = 'jpg';
+            } else{
+                $extension = 'png'; 
+            }
+            $fileName= str_random().'.'.$extension;
+            $path = public_path().'/img/producto/'.$fileName;
+            file_put_contents($path,$decoded);
+            /*inicio eliminar del servidor*/
+            $productoImagen = public_path('/img/producto/').$currentPhoto;
+            if( file_exists($productoImagen) ){
+                @unlink($productoImagen);
+            }
+            /*fin eliminar del servidor*/
+            $producto->imagen = $fileName;
+        }
+        //fin editar imagen
         $producto->save();
     }
 
