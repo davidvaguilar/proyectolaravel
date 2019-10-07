@@ -2,7 +2,7 @@
   <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - COMPRAS</a></li>
     </ol>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
@@ -39,7 +39,7 @@
                   <th>Proveedor</th>
                   <th>Tipo de identificación</th>
                   <th>Comprador</th>  
-                  <th>Total (USD$)</th>
+                  <th>Total</th>
                   <th>Impuesto</th>
                   <th>Estado</th>
                   <th>Cambiar estado</th>
@@ -60,7 +60,7 @@
                   <td v-text="compra.tipo_identificacion"></td> 
                   <td v-text="compra.usuario"></td> 
                   <td v-text="compra.total"></td>
-                  <td v-text="compra.impuesto"></td>
+                  <td v-text="compra.impuesto * 100 + ' %'"></td>
                   <td>
                     <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
                       <i class="fa fa-check fa-2x"></i> Registrado
@@ -223,15 +223,15 @@
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong> USD$ {{ subTotal=(total-subTotalImpuesto).toFixed(2) }}</strong></td>
+                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>USD$ {{ subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2) }}</strong></td>
+                      <td><strong>$ {{ subTotalImpuesto = ( (total*impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Total:</strong></td>
-                      <td><strong>USD$ {{ total=calcularTotal }}</strong></td>
+                      <td><strong>$ {{ total = calcularTotal }}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -288,9 +288,9 @@
                   <thead>
                     <tr class="bg-success">
                       <th>Producto</th>
-                      <th>Precio (USD$)</th>
+                      <th>Precio</th>
                       <th>Cantidad</th>
-                      <th>Total (USD$)</th>
+                      <th>Total</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
@@ -298,19 +298,19 @@
                       <td v-text="detalle.producto"></td>
                       <td v-text="detalle.precio"></td>
                       <td v-text="detalle.cantidad"></td>
-                      <td> {{detalle.precio*detalle.cantidad}} </td>
+                      <td> {{ detalle.precio * detalle.cantidad }} </td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="3" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong>USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotal=(total - subTotalImpuesto).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="3" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotalImpuesto = ((total * impuesto)).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="3" align="right"><strong>Total:</strong></td>
-                      <td><strong>USD$ {{total}}</strong></td>
+                      <td><strong>$ {{ total }}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -366,7 +366,7 @@
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
-                    <th>Precio Venta ($)</th>
+                    <th>Precio Venta</th>
                     <th>Stock</th>
                     <th>Imagen</th>
                     <th>Estado</th>
@@ -427,7 +427,7 @@
         nombre: '',
         tipo_identificacion : 'FACTURA',
         num_compra: '',
-        impuesto: 0.20,
+        impuesto: 0.18,
         total: 0.0,
         subTotalImpuesto: 0.0,
         subTotal: 0.0,
@@ -667,7 +667,7 @@
           me.idproveedor = 0;
           me.tipo_identificacion = 'FACTURA';
           me.num_compra = '';
-          me.impuesto = 0.20;
+          me.impuesto = 0.18;
           me.total = 0.0;
           me.idproducto = 0;
           me.producto = '';
@@ -696,7 +696,7 @@
         me.idproveedor = 0;
         me.tipo_identificacion = 'FACTURA';
         me.num_compra = '';
-        me.impuesto = 0.20;
+        me.impuesto = 0.18;
         me.total = 0.0;
         me.idproducto = 0;
         me.producto = '';
@@ -711,16 +711,15 @@
         let me = this;
         me.listado = 2;
         var arrayCompraT = [];
-        var url = '/compra/obtenerCabecera?id='+id;
-        
+        var url = '/compra/obtenerCabecera?id=' + id;
         axios.get(url).then(function (response) {
-          var respuesta= response.data;
+          var respuesta = response.data;
           arrayCompraT = respuesta.compra;
           me.proveedor = arrayCompraT[0]['nombre'];
-          me.tipo_identificacion=arrayCompraT[0]['tipo_identificacion'];
-          me.num_compra=arrayCompraT[0]['num_compra'];
-          me.impuesto=arrayCompraT[0]['impuesto'];
-          me.total=arrayCompraT[0]['total'];
+          me.tipo_identificacion = arrayCompraT[0]['tipo_identificacion'];
+          me.num_compra = arrayCompraT[0]['num_compra'];
+          me.impuesto = arrayCompraT[0]['impuesto'];
+          me.total = arrayCompraT[0]['total'];
         })
         .catch(function (error) {
             console.log(error);

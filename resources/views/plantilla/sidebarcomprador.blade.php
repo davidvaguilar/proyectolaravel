@@ -2,7 +2,7 @@
   <nav class="sidebar-nav">
     <ul class="nav">
       <li  @click="menu=0" class="nav-item">
-        <a class="nav-link active" href="#"><i class="icon-speedometer"></i> Dashbord</a>
+        <a class="nav-link active" href="#"><i class="icon-speedometer"></i> Reportes</a>
       </li>
       <li class="nav-title">Menú</li>
       <li @click="menu=1" class="nav-item">

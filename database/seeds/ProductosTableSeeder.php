@@ -14,14 +14,14 @@ class ProductosTableSeeder extends Seeder
     {
         Producto::create([
             'idcategoria' => 1,
-            'codigo' => '1234',
-            'nombre' => 'selecta',
-            'precio_venta' => 1000,
-            'stock' => 10
-            
+            'codigo' => '8410100025155',
+            'nombre' => 'Cacao Nesquik 400 GRS',
+            'precio_venta' => 10000,
+            'stock' => 3,
+            'imagen' => '8410100025155.jpg'
         ]);
 
-        Producto::create([
+        /*Producto::create([
             'idcategoria' => 2,
             'codigo' => '4567',
             'nombre' => 'ace',
@@ -35,6 +35,6 @@ class ProductosTableSeeder extends Seeder
             'nombre' => 'cristal',
             'precio_venta' => 5000,
             'stock' => 30
-        ]);
+        ]);*/
     }
 }

@@ -1,10 +1,8 @@
 <template>
 <main class="main">
-  <!-- Breadcrumb -->
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">BACKEND - SISTEMA COMPRAS - VENTAS</a></li>
+    <li class="breadcrumb-item"><a href="/">SISTEMA DE COMPRA Y VENTA</a></li>
   </ol>
-
   <div class="container-fluid">
     <div class="card">
       <div class="card-header">
@@ -88,35 +86,35 @@
           });
       },
       loadCompras(){
-          let me=this;
-          me.compras.map(function(x){
-              me.varMesCompra.push(x.mes);
-              me.varTotalCompra.push(x.total);
-          });
-          me.varCompra=document.getElementById('compras').getContext('2d');
+        let me=this;
+        me.compras.map(function(x){
+          me.varMesCompra.push(x.mes);
+          me.varTotalCompra.push(x.total);
+        });
+        me.varCompra=document.getElementById('compras').getContext('2d');
 
-          me.charCompra = new Chart(me.varCompra, {
-              type: 'bar',
-              data: {
-                labels: me.varMesCompra,
-                datasets: [{
-                    label: 'Compras',
-                    data: me.varTotalCompra,
-                    backgroundColor: 'rgba(110, 63, 191, 1)',
-                    borderColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 1
-                }]
-              },
-              options: {
-                  scales: {
-                      yAxes: [{
-                          ticks: {
-                              beginAtZero:true
-                          }
-                      }]
-                  }
-              }
-          });
+        me.charCompra = new Chart(me.varCompra, {
+          type: 'bar',
+          data: {
+            labels: me.varMesCompra,
+            datasets: [{
+              label: 'Compras',
+              data: me.varTotalCompra,
+              backgroundColor: 'rgba(110, 63, 191, 1)',
+              borderColor: 'rgba(255, 99, 132, 0.2)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }
+        });
       },
       loadVentas(){
         let me=this;
@@ -127,26 +125,26 @@
         me.varVenta=document.getElementById('ventas').getContext('2d');
 
         me.charVenta = new Chart(me.varVenta, {
-            type: 'bar',
-            data: {
-              labels: me.varMesVenta,
-              datasets: [{
-                label: 'Ventas',
-                data: me.varTotalVenta,
-                backgroundColor: 'rgba(20, 204, 20, 1)',
-                borderColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 1
+          type: 'bar',
+          data: {
+            labels: me.varMesVenta,
+            datasets: [{
+              label: 'Ventas',
+              data: me.varTotalVenta,
+              backgroundColor: 'rgba(20, 204, 20, 1)',
+              borderColor: 'rgba(54, 162, 235, 0.2)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
               }]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero:true
-                  }
-                }]
-              }
             }
+          }
         });
       }    
     },

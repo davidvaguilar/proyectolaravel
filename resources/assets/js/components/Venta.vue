@@ -3,7 +3,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">
-        <a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a>
+        <a href="/">SISTEMA DE COMPRA Y VENTA - VENTAS</a>
       </li>
     </ol>
     <div class="container-fluid">
@@ -40,7 +40,7 @@
                   <th>Cliente</th>
                   <th>Tipo de identificación</th>
                   <th>Vendedor</th>  
-                  <th>Total (USD$)</th>
+                  <th>Total</th>
                   <th>Impuesto</th>
                   <th>Estado</th>
                   <th>Cambiar estado</th>
@@ -202,10 +202,10 @@
                     <tr class="bg-success">
                       <th>Eliminar</th>
                       <th>Producto</th>
-                      <th>Precio (USD$)</th>
+                      <th>Precio</th>
                       <th>Cantidad</th>
                       <th>Descuento</th>
-                      <th>Total (USD$)</th>
+                      <th>Total</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
@@ -227,19 +227,19 @@
                         <span style="color:red;" v-show="detalle.descuento>(detalle.precio*detalle.cantidad)">Descuento superior al total</span>
                         <input v-model="detalle.descuento" type="number" class="form-control">
                       </td>
-                      <td> {{detalle.precio*detalle.cantidad - detalle.descuento}} </td>
+                      <td>{{ detalle.precio * detalle.cantidad - detalle.descuento }}</td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="5" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong> USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="5" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotalImpuesto = ( (total * impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="5" align="right"><strong>Total:</strong></td>
-                      <td><strong>USD$ {{total=calcularTotal}}</strong></td>
+                      <td><strong>$ {{ total = calcularTotal }}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -295,10 +295,10 @@
                   <thead>
                     <tr class="bg-success">
                       <th>Producto</th>
-                      <th>Precio (USD$)</th>
+                      <th>Precio</th>
                       <th>Cantidad</th>
                       <th>Descuento</th>
-                      <th>Total (USD$)</th>
+                      <th>Total</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
@@ -311,15 +311,15 @@
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong>USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
+                      <td><strong>$ {{ subTotalImpuesto = ((total * impuesto)).toFixed(2) }}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
                       <td colspan="4" align="right"><strong>Total:</strong></td>
-                      <td><strong>USD$ {{total}}</strong></td>
+                      <td><strong>$ {{ total }}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -373,7 +373,7 @@
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
-                    <th>Precio Venta (USD$)</th>
+                    <th>Precio Venta</th>
                     <th>Stock</th>
                     <th>Imagen</th>
                     <th>Estado</th>
@@ -433,7 +433,7 @@
         cliente : '',
         tipo_identificacion : 'FACTURA',
         num_venta : '',
-        impuesto : 0.20,
+        impuesto : 0.18,
         total : 0.0,
         subTotalImpuesto : 0.0,
         subTotal : 0.0,
@@ -688,21 +688,21 @@
           'total' : this.total,
           'data': this.arrayDetalle
         }).then(function (response) {
-          me.listado=1;
-          me.listarVenta(1,'','num_venta');
-          me.idcliente=0;
-          me.tipo_identificacion='FACTURA';
-          me.num_venta='';
-          me.impuesto=0.20;
-          me.total=0.0;
-          me.idproducto=0;
-          me.producto='';
-          me.cantidad=0;
-          me.precio=0;
-          me.stock=0;
-          me.codigo='';
-          me.descuento=0;
-          me.arrayDetalle=[];
+          me.listado = 1;
+          me.listarVenta(1, '', 'num_venta');
+          me.idcliente = 0;
+          me.tipo_identificacion = 'FACTURA';
+          me.num_venta = '';
+          me.impuesto = 0.18;
+          me.total = 0.0;
+          me.idproducto = 0;
+          me.producto = '';
+          me.cantidad = 0;
+          me.precio = 0;
+          me.stock = 0;
+          me.codigo = '';
+          me.descuento = 0;
+          me.arrayDetalle = [];
         }).catch(function (error) {
           console.log(error);
         });
@@ -727,24 +727,22 @@
         if( me.errorMostrarMsjVenta.length ) me.errorVenta = 1;
         return me.errorVenta;
       },
-
       mostrarDetalle(){
-        let me= this;       
-        me.listado=0;
-        me.idproveedor=0;
-        me.tipo_identificacion='FACTURA';
-        me.num_compra='';
-        me.impuesto=0.20;
-        me.total=0.0;
-        me.idproducto=0;
-        me.producto='';
-        me.cantidad=0;
-        me.precio=0;
-        me.arrayDetalle=[];
+        let me = this;       
+        me.listado = 0;
+        me.idproveedor = 0;
+        me.tipo_identificacion = 'FACTURA';
+        me.num_compra = '';
+        me.impuesto = 0.18;
+        me.total = 0.0;
+        me.idproducto = 0;
+        me.producto = '';
+        me.cantidad = 0;
+        me.precio = 0;
+        me.arrayDetalle = [];
       },
-
       ocultarDetalle(){
-        this.listado=1;
+        this.listado = 1;
       },
       verVenta(id){
         let me = this;
@@ -823,9 +821,7 @@
           }
         }) 
       },
-
     },
-        
     mounted() {
       this.listarVenta(1, this.buscar, this.criterio);
     }

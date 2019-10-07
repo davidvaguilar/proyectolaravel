@@ -13,8 +13,8 @@ class CategoriasTableSeeder extends Seeder
     public function run()
     {
         Categoria::create([
-            'nombre' => 'harina',
-            'descripcion' => 'variedad de harina',
+            'nombre' => 'lacteos',
+            'descripcion' => 'variedad de lacteos o bebidas lacteas',
         ]);
 
         Categoria::create([

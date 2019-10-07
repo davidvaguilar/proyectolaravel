@@ -99,7 +99,7 @@
   
   </style>
   <body>
-    @foreach ($venta as $v)
+    @foreach( $venta as $v )
     <header>
       <!--<div id="logo">
           <img src="img/logo.png" alt="" id="imagen">
@@ -113,23 +113,27 @@
           </thead>
           <tbody>
             <tr>
-              <th><p id="proveedor">Nombre: {{$v->nombre}}<br>
-                {{$v->tipo_identificacion}}-VENTA: {{$v->num_venta}}<br>
-                Dirección: {{$v->direccion}}<br>
-                Teléfono: {{$v->telefono}}<br>
-                Email: {{$v->email}}</</p></th>
+              <th>
+                <p id="proveedor">
+                  Nombre: {{ $v->nombre }}<br>
+                  {{ $v->tipo_identificacion }}-VENTA: {{ $v->num_venta }}<br>
+                  Dirección: {{ $v->direccion }}<br>
+                  Teléfono: {{ $v->telefono }}<br>
+                  Email: {{ $v->email }}
+                </p>
+              </th>
             </tr>
           </tbody>
         </table>
       </div>
-            
       <div id="fact">
-        <p>{{$v->tipo_identificacion}}-VENTA<br>
-          {{$v->num_venta}}</p>
+        <p>
+          {{ $v->tipo_identificacion }}-VENTA<br>
+          {{ $v->num_venta }}
+        </p>
       </div>
     </header>
     <br>
-       
     @endforeach
     <br>
     <section>
@@ -139,44 +143,44 @@
             <tr id="fa">
               <th>CANTIDAD</th>
               <th>PRODUCTO</th>
-              <th>PRECIO VENTA (USD$)</th>
+              <th>PRECIO VENTA</th>
               <th>DESCUENTO</th>
-              <th>PRECIO TOTAL (USD$)</th>
+              <th>PRECIO TOTAL</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($detalles as $det)
             <tr>
-                <td>{{$det->cantidad}}</td>
-                <td>{{$det->producto}}</td>
-                <td>{{$det->precio}}</td>
-                <td>{{$det->descuento}}</td>
-                <td>{{$det->cantidad*$det->precio-$det->descuento}}</td>
+              <td>{{ $det->cantidad }}</td>
+              <td>{{ $det->producto }}</td>
+              <td>{{ $det->precio }}</td>
+              <td>{{ $det->descuento }}</td>
+              <td>{{ $det->cantidad * $det->precio-$det->descuento }}</td>
             </tr>
             @endforeach
           </tbody>
           <tfoot>
-            @foreach ($venta as $v)
+            @foreach( $venta as $v )
             <tr>
               <th></th>
               <th></th>
               <th></th>
               <th>SUBTOTAL</th>
-              <td>USD$ {{round($v->total-($v->total*$v->impuesto),2)}}</td>
+              <td>$ {{ round($v->total - ($v->total * $v->impuesto), 2) }}</td>
             </tr>
             <tr>
               <th></th>
               <th></th>
               <th></th>
               <th>Impuesto</th>
-              <td>USD$ {{round($v->total*$v->impuesto,2)}}</td>
+              <td>$ {{ round($v->total * $v->impuesto, 2) }}</td>
             </tr>
             <tr>
               <th></th>
               <th></th>
               <th></th>
               <th>TOTAL</th>
-              <td>USD$ {{$v->total}}</td>
+              <td>$ {{ $v->total }}</td>
             </tr>
             @endforeach
           </tfoot>
@@ -188,9 +192,9 @@
     <footer>
       <!--puedes poner un mensaje aqui-->
       <div id="datos">
-          <p id="encabezado">
-              <b>webtraining-it.com</b><br>Eyter Higuera<br>Telefono:(+00)123456799<br>Email:webdeveloperphpwordpress@gmail.com
-          </p>
+        <p id="encabezado">
+          <b>dyi.cl</b><br>David Villegas<br>Telefono:(+56)976400180<br>Email:david.villegas.aguilar@gmail.com
+        </p>
       </div>
     </footer>
   </body>

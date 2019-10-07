@@ -13,12 +13,12 @@ class ClientesTableSeeder extends Seeder
     public function run()
     {
         Cliente::create([
-            'nombre' => 'pedro',
+            'nombre' => 'pepe',
             'tipo_documento' => 'CEDULA',
-            'num_documento' => '123455',
-            'direccion' => 'av tucapel',
-            'telefono' => '123456',
-            'email' => 'pedro@correo.cl'
+            'num_documento' => '11111111',
+            'direccion' => 'tucapel',
+            'telefono' => '572222222',
+            'email' => 'pepe@correo.cl'
         ]);
     }
 }

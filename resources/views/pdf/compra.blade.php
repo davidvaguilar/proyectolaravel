@@ -99,33 +99,38 @@
 
   </style>
   <body>
-    @foreach ($compra as $v)
+    @foreach( $compra as $v )
     <header>
       <!--<div id="logo">
           <img src="img/logo.png" alt="" id="imagen">
       </div>-->         
       <div>
-                
         <table id="datos">
-            <thead>                        
-                <tr>
-                    <th id="">DATOS DEL PROVEEDOR</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th><p id="proveedor">Nombre: {{$v->nombre}}<br>
-                    {{$v->tipo_identificacion}}-COMPRA: {{$v->num_compra}}<br>
-                    Dirección: {{$v->direccion}}<br>
-                    Teléfono: {{$v->telefono}}<br>
-                    Email: {{$v->email}}</</p></th>
-                </tr>
-            </tbody>
+          <thead>                        
+            <tr>
+              <th id="">DATOS DEL PROVEEDOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>
+                <p id="proveedor">
+                  Nombre: {{ $v->nombre }}<br>
+                  {{ $v->tipo_identificacion }}-COMPRA: {{ $v->num_compra }}<br>
+                  Dirección: {{ $v->direccion }}<br>
+                  Teléfono: {{ $v->telefono }}<br>
+                  Email: {{ $v->email }}
+                </p>
+              </th>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div id="fact">
-          <p>{{$v->tipo_identificacion}} COMPRA<br/>
-            {{$v->num_compra}}</p>
+          <p>
+            {{ $v->tipo_identificacion }} COMPRA<br/>
+            {{ $v->num_compra }}
+          </p>
       </div>
     </header>
     <br>
@@ -143,8 +148,8 @@
               </thead>
               <tbody>
                   <tr>
-                      <td>{{$v->usuario}}</td>
-                      <td>{{$v->created_at}}</td>
+                      <td>{{ $v->usuario }}</td>
+                      <td>{{ $v->created_at }}</td>
                   </tr>
               </tbody>
           </table>
@@ -158,18 +163,18 @@
             <tr id="fa">
                 <th>CANTIDAD</th>
                 <th>PRODUCTO</th>
-                <th>PRECIO COMPRA (USD$)</th>
+                <th>PRECIO COMPRA</th>
                 <th>CANTIDAD*PRECIO</th>
-                <th>PRECIO TOTAL (USD$)</th>
+                <th>PRECIO TOTAL</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($detalles as $det)
+            @foreach( $detalles as $det )
             <tr>
-              <td>{{$det->cantidad}}</td>
-              <td>{{$det->producto}}</td>
-              <td>{{$det->precio}}</td>
-              <td>{{$det->cantidad*$det->precio}}</td>
+              <td>{{ $det->cantidad }}</td>
+              <td>{{ $det->producto }}</td>
+              <td>{{ $det->precio }}</td>
+              <td>{{ $det->cantidad * $det->precio }}</td>
             </tr>
             @endforeach
           </tbody>
@@ -180,21 +185,21 @@
               <th></th>
               <th></th>
               <th>SUBTOTAL</th>
-              <td>USD$ {{round($v->total-($v->total*$v->impuesto),2)}}</td>
+              <td>$ {{ round($v->total - ($v->total * $v->impuesto), 2) }}</td>
             </tr>
             <tr>
               <th></th>
               <th></th>
               <th></th>
               <th>Impuesto</th>
-              <td>USD$ {{round($v->total*$v->impuesto,2)}}</td>
+              <td>$ {{ round($v->total * $v->impuesto, 2) }}</td>
             </tr>
             <tr>
               <th></th>
               <th></th>
               <th></th>
               <th>TOTAL</th>
-              <td>USD$ {{$v->total}}</td>
+              <td>$ {{ $v->total }}</td>
             </tr>
             @endforeach
           </tfoot>
@@ -207,7 +212,7 @@
       <!--puedes poner un mensaje aqui-->
       <div id="datos">
         <p id="encabezado">
-          <b>webtraining-it.com</b><br>Eyter Higuera<br>Telefono:(+00)123456799<br>Email:webdeveloperphpwordpress@gmail.com
+          <b>dyi.cl</b><br>David Villegas<br>Telefono:(+56)976400180<br>Email:david.villegas.aguilar@gmail.com
         </p>
       </div>
     </footer>

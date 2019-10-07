@@ -15,17 +15,15 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('idcategoria')->unsigned();
+            $table->foreign('idcategoria')->references('id')->on('categorias');
             $table->string('codigo', 50)->nullable();
             $table->string('nombre', 100)->unique();
-            $table->decimal('precio_venta', 11, 2);
+            $table->integer('precio_venta');  //, 2
             $table->integer('stock');
             $table->boolean('condicion')->default(1);
             $table->string('imagen', 200)->nullable();
-            $table->timestamps();
-
-            $table->foreign('idcategoria')->references('id')->on('categorias');
+            $table->timestamps();            
         });
     }
 

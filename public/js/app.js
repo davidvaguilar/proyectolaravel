@@ -36466,7 +36466,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - CATEGORIAS")
         ])
       ])
     ])
@@ -40526,7 +40526,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - PRODUCTO")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - PRODUCTOS")
         ])
       ])
     ])
@@ -41683,7 +41683,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - PROVEEDORES")
         ])
       ])
     ])
@@ -42834,7 +42834,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - CLIENTES")
         ])
       ])
     ])
@@ -43360,7 +43360,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - ROLES")
         ])
       ])
     ])
@@ -44930,7 +44930,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - USUARIOS")
         ])
       ])
     ])
@@ -45503,7 +45503,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       nombre: '',
       tipo_identificacion: 'FACTURA',
       num_compra: '',
-      impuesto: 0.20,
+      impuesto: 0.18,
       total: 0.0,
       subTotalImpuesto: 0.0,
       subTotal: 0.0,
@@ -45730,7 +45730,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         me.idproveedor = 0;
         me.tipo_identificacion = 'FACTURA';
         me.num_compra = '';
-        me.impuesto = 0.20;
+        me.impuesto = 0.18;
         me.total = 0.0;
         me.idproducto = 0;
         me.producto = '';
@@ -45758,7 +45758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       me.idproveedor = 0;
       me.tipo_identificacion = 'FACTURA';
       me.num_compra = '';
-      me.impuesto = 0.20;
+      me.impuesto = 0.18;
       me.total = 0.0;
       me.idproducto = 0;
       me.producto = '';
@@ -45774,7 +45774,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       me.listado = 2;
       var arrayCompraT = [];
       var url = '/compra/obtenerCabecera?id=' + id;
-
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayCompraT = respuesta.compra;
@@ -46533,7 +46532,11 @@ var render = function() {
                             }),
                             _vm._v(" "),
                             _c("td", {
-                              domProps: { textContent: _vm._s(compra.impuesto) }
+                              domProps: {
+                                textContent: _vm._s(
+                                  compra.impuesto * 100 + " %"
+                                )
+                              }
                             }),
                             _vm._v(" "),
                             _c("td", [
@@ -47230,7 +47233,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            " USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotal = (
                                                   _vm.total -
@@ -47256,7 +47259,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotalImpuesto = (
                                                   (_vm.total * _vm.impuesto) /
@@ -47282,7 +47285,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.total = _vm.calcularTotal)
                                               )
@@ -47451,7 +47454,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotal = (
                                                   _vm.total -
@@ -47477,7 +47480,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotalImpuesto = (
                                                   _vm.total * _vm.impuesto
@@ -47501,7 +47504,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _c("strong", [
-                                          _vm._v("USD$ " + _vm._s(_vm.total))
+                                          _vm._v("$ " + _vm._s(_vm.total))
                                         ])
                                       ])
                                     ]
@@ -47870,7 +47873,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - COMPRAS")
         ])
       ])
     ])
@@ -47893,7 +47896,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Comprador")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total (USD$)")]),
+        _c("th", [_vm._v("Total")]),
         _vm._v(" "),
         _c("th", [_vm._v("Impuesto")]),
         _vm._v(" "),
@@ -48048,11 +48051,11 @@ var staticRenderFns = [
       _c("tr", { staticClass: "bg-success" }, [
         _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio (USD$)")]),
+        _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total (USD$)")])
+        _c("th", [_vm._v("Total")])
       ])
     ])
   },
@@ -48104,7 +48107,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Codigo")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio Venta ($)")]),
+        _c("th", [_vm._v("Precio Venta")]),
         _vm._v(" "),
         _c("th", [_vm._v("Stock")]),
         _vm._v(" "),
@@ -48662,7 +48665,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       cliente: '',
       tipo_identificacion: 'FACTURA',
       num_venta: '',
-      impuesto: 0.20,
+      impuesto: 0.18,
       total: 0.0,
       subTotalImpuesto: 0.0,
       subTotal: 0.0,
@@ -48907,7 +48910,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         me.idcliente = 0;
         me.tipo_identificacion = 'FACTURA';
         me.num_venta = '';
-        me.impuesto = 0.20;
+        me.impuesto = 0.18;
         me.total = 0.0;
         me.idproducto = 0;
         me.producto = '';
@@ -48946,7 +48949,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       me.idproveedor = 0;
       me.tipo_identificacion = 'FACTURA';
       me.num_compra = '';
-      me.impuesto = 0.20;
+      me.impuesto = 0.18;
       me.total = 0.0;
       me.idproducto = 0;
       me.producto = '';
@@ -49028,7 +49031,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   },
-
   mounted: function mounted() {
     this.listarVenta(1, this.buscar, this.criterio);
   }
@@ -50028,13 +50030,10 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              detalle.precio *
-                                                detalle.cantidad -
-                                                detalle.descuento
-                                            ) +
-                                            " "
+                                          _vm._s(
+                                            detalle.precio * detalle.cantidad -
+                                              detalle.descuento
+                                          )
                                         )
                                       ])
                                     ])
@@ -50053,7 +50052,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            " USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotal = (
                                                   _vm.total -
@@ -50079,7 +50078,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotalImpuesto = (
                                                   (_vm.total * _vm.impuesto) /
@@ -50105,7 +50104,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.total = _vm.calcularTotal)
                                               )
@@ -50279,7 +50278,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotal = (
                                                   _vm.total -
@@ -50305,7 +50304,7 @@ var render = function() {
                                       _c("td", [
                                         _c("strong", [
                                           _vm._v(
-                                            "USD$ " +
+                                            "$ " +
                                               _vm._s(
                                                 (_vm.subTotalImpuesto = (
                                                   _vm.total * _vm.impuesto
@@ -50329,7 +50328,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _c("strong", [
-                                          _vm._v("USD$ " + _vm._s(_vm.total))
+                                          _vm._v("$ " + _vm._s(_vm.total))
                                         ])
                                       ])
                                     ]
@@ -50698,7 +50697,7 @@ var staticRenderFns = [
     return _c("ol", { staticClass: "breadcrumb" }, [
       _c("li", { staticClass: "breadcrumb-item active" }, [
         _c("a", { attrs: { href: "/" } }, [
-          _vm._v("BACKEND - SISTEMA DE COMPRAS - VENTAS")
+          _vm._v("SISTEMA DE COMPRA Y VENTA - VENTAS")
         ])
       ])
     ])
@@ -50721,7 +50720,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Vendedor")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total (USD$)")]),
+        _c("th", [_vm._v("Total")]),
         _vm._v(" "),
         _c("th", [_vm._v("Impuesto")]),
         _vm._v(" "),
@@ -50794,13 +50793,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio (USD$)")]),
+        _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Descuento")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total (USD$)")])
+        _c("th", [_vm._v("Total")])
       ])
     ])
   },
@@ -50878,13 +50877,13 @@ var staticRenderFns = [
       _c("tr", { staticClass: "bg-success" }, [
         _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio (USD$)")]),
+        _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Descuento")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total (USD$)")])
+        _c("th", [_vm._v("Total")])
       ])
     ])
   },
@@ -50934,7 +50933,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Codigo")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio Venta (USD$)")]),
+        _c("th", [_vm._v("Precio Venta")]),
         _vm._v(" "),
         _c("th", [_vm._v("Stock")]),
         _vm._v(" "),
@@ -51009,8 +51008,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -51185,7 +51182,7 @@ var staticRenderFns = [
       _c("ol", { staticClass: "breadcrumb" }, [
         _c("li", { staticClass: "breadcrumb-item" }, [
           _c("a", { attrs: { href: "/" } }, [
-            _vm._v("BACKEND - SISTEMA COMPRAS - VENTAS")
+            _vm._v("SISTEMA DE COMPRA Y VENTA")
           ])
         ])
       ]),
