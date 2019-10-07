@@ -10,7 +10,7 @@ class DetalleCompra extends Model
 
     protected $fillable= ['idcompra', 'idproducto', 'cantidad', 'precio'];
 
-    public $timestaps = false;
+    public $timestamps = false;
 
     
 }

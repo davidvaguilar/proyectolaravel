@@ -2,43 +2,44 @@
   <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+      <li class="breadcrumb-item active">
+        <a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a>
+      </li>
     </ol>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
-
         <template v-if="listado==1">
           <div class="card-header">
-            <h2>Listado de Compras</h2><br/>
+            <h2>Listado de Ventas</h2><br/>
             <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-              <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
+              <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
             </button>
           </div>
           <!--listado-->
           <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <select class="form-control col-md-3" v-model="criterio">
-                          <option value="tipo_identificacion">Tipo identificación</option>
-                          <option value="num_compra">Número Compra</option>
-                          <option value="fecha_compra">Fecha Compra</option>
-                        </select>
-                        <input type="text"  @keyup.enter="listarCompra(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
-                        <button type="submit"  @click="listarCompra(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                    </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <select class="form-control col-md-3" v-model="criterio">
+                    <option value="tipo_identificacion">Tipo identificación</option>
+                    <option value="num_venta">Número Venta</option>
+                    <option value="fecha_venta">Fecha Venta</option>
+                  </select>
+                  <input type="text"  @keyup.enter="listarVenta(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
+                  <button type="submit"  @click="listarVenta(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                 </div>
+              </div>
             </div>
             <table class="table table-bordered table-striped table-sm">
               <thead>
-                <tr class="bg-primary">                      
+                <tr class="bg-primary">
                   <th>Ver Detalle</th>
-                  <th>Fecha Compra</th>
-                  <th>Número Compra</th>
-                  <th>Proveedor</th>
+                  <th>Fecha Venta</th>
+                  <th>Número Venta</th>
+                  <th>Cliente</th>
                   <th>Tipo de identificación</th>
-                  <th>Comprador</th>  
+                  <th>Vendedor</th>  
                   <th>Total (USD$)</th>
                   <th>Impuesto</th>
                   <th>Estado</th>
@@ -47,45 +48,45 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="compra in arrayCompra" :key="compra.id">
+                <tr v-for="venta in arrayVenta" :key="venta.id">
                   <td>
                     <!--compra.id-->
-                    <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm">
+                    <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
                       <i class="fa fa-eye fa-2x"></i> Ver detalle
                     </button> &nbsp;
                   </td>
-                  <td v-text="compra.fecha_compra"></td>
-                  <td v-text="compra.num_compra"></td>
-                  <td v-text="compra.nombre"></td>
-                  <td v-text="compra.tipo_identificacion"></td> 
-                  <td v-text="compra.usuario"></td> 
-                  <td v-text="compra.total"></td>
-                  <td v-text="compra.impuesto"></td>
+                  <td v-text="venta.fecha_venta"></td>
+                  <td v-text="venta.num_venta"></td>
+                  <td v-text="venta.nombre"></td>
+                  <td v-text="venta.tipo_identificacion"></td> 
+                  <td v-text="venta.usuario"></td> 
+                  <td v-text="venta.total"></td>
+                  <td v-text="venta.impuesto"></td>
                   <td>
-                    <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
+                    <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm">
                       <i class="fa fa-check fa-2x"></i> Registrado
-                    </button>                
+                    </button>                    
                     <button type="button" v-else class="btn btn-danger btn-sm">
                       <i class="fa fa-times fa-2x"></i> Anulado
                     </button>
                   </td>
                   <td>
-                    <template v-if="compra.estado=='Registrado'">
-                      <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
-                        <i class="fa fa-times fa-2x"></i> Anular Compra
+                    <template v-if="venta.estado=='Registrado'">
+                      <button type="button" class="btn btn-danger btn-sm" @click="desactivarVenta(venta.id)">
+                        <i class="fa fa-times fa-2x"></i> Anular Venta
                       </button>
                     </template>
                     <template v-else>
-                      <button type="button" class="btn btn-danger btn-sm">
-                        <i class="fa fa-check fa-2x"></i> Cambiado
-                      </button>
+                        <button type="button" class="btn btn-danger btn-sm">
+                              <i class="fa fa-check fa-2x"></i> Cambiado
+                        </button>
                     </template>
                   </td>
-                  <td>                              
-                    <button type="button" @click="pdfCompra(compra.id)" class="btn btn-info btn-sm">
-                      <i class="fa fa-file fa-2x"></i>Descargar PDF
+                  <td>                 
+                    <button type="button" @click="pdfVenta(venta.id)" class="btn btn-info btn-sm">
+                      <i class="fa fa-file fa-2x"></i> Descargar PDF
                     </button> &nbsp;
-                  </td>                     
+                  </td>  
                 </tr>
               </tbody>
             </table>
@@ -95,7 +96,7 @@
                   <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Anterior</a>
                 </li>
                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                  <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                 </li>
                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                   <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
@@ -107,160 +108,166 @@
         <!--fin listado-->
         <!-- Detalle-->
         <template v-else-if="listado==0">
-          <span><strong>(*) Campo obligatorio</strong></span><br/>
-            <h3 class="text-center">LLenar el formulario</h3>
-                          
-            <div class="card-body">
-              <div class="form-group row border">
-
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Número Compra(*)</strong></label>
-                    <input type="text" class="form-control" v-model="num_compra" placeholder="">
-                  </div>
+          <span>
+            <strong>(*) Campo obligatorio</strong>
+          </span><br/>
+          <h3 class="text-center">LLenar el formulario</h3>
+          <div class="card-body">
+            <div class="form-group row border">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Número Venta(*)</strong></label>
+                  <input type="text" class="form-control" v-model="num_venta" placeholder="">
                 </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Proveedor(*)</strong></label>
-                    <v-select
-                        @search="selectProveedor"
-                        label="nombre"
-                        :options="arrayProveedor"
-                        placeholder="Buscar Proveedores..."
-                        @input="getDatosProveedor" >
-                    </v-select>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
-                    <select class="form-control" v-model="tipo_identificacion">
-                      <option value="0">Seleccione</option>
-                      <option value="FACTURA">Factura</option>
-                      <option value="TICKET">Ticket</option>                  
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                    <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
-                    <input type="text" class="form-control" v-model="impuesto">
-                </div>                          
               </div>
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <div v-show="errorCompra" class="form-group row div-error">
-                    <div class="text-center text-error">
-                      <div v-for="error in errorMostrarMsjCompra" :key="error" v-text="error">
-                      </div>
-                    </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Cliente(*)</strong></label>
+                  <v-select
+                      @search="selectCliente"
+                      label="nombre"
+                      :options="arrayCliente"
+                      placeholder="Buscar Clientes..."
+                      @input="getDatosCliente" >
+                  </v-select>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
+                  <select class="form-control" v-model="tipo_identificacion">
+                    <option value="0">Seleccione</option>
+                    <option value="FACTURA">Factura</option>
+                    <option value="TICKET">Ticket</option>                        
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
+                <input type="text" class="form-control" v-model="impuesto">
+              </div>      
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <div v-show="errorVenta" class="form-group row div-error">
+                  <div class="text-center text-error">
+                    <div v-for="error in errorMostrarMsjVenta" :key="error" v-text="error"> </div>
                   </div>
                 </div>
               </div>
-
-              <div class="form-group row border">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Producto <span class="text-error" v-show="idproducto==0">(*Ingrese código del producto)</span></label>
-                    <div class="form-inline">
-                      <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
-                      <button @click="abrirModal()" class="btn btn-primary">
-                        <i class="fa fa-plus"></i>&nbsp;Agregar Productos
-                      </button>
-                      <input type="text" readonly class="form-control" v-model="producto">
-                    </div>                                    
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>Precio <span class="text-error" v-show="precio==0">(*Ingrese un valor)</span></label>
-                    <input type="number" value="0" step="any" class="form-control" v-model="precio">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>Cantidad <span class="text-error" v-show="cantidad==0">(*Ingrese un valor)</span></label>
-                    <input type="number" value="0" class="form-control" v-model="cantidad">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <button @click="agregarDetalle()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Agregar detalle</button>
-                  </div>
+            </div>
+            <div class="form-group row border">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Producto <span class="text-error" v-show="idproducto==0">(*Ingrese código del producto)</span></label>
+                  <div class="form-inline">
+                    <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
+                    <button @click="abrirModal()" class="btn btn-primary">
+                      <i class="fa fa-plus"></i>&nbsp;Agregar Productos
+                    </button>
+                    <input type="text" readonly class="form-control" v-model="producto">
+                  </div>                                    
                 </div>
               </div>
-
-              <br/><br/>
-              <div class="form-group row border">
-                <h3>Lista de Compras a Proveedores</h3>
-                <div class="table-responsive col-md-12">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Precio <span class="text-error" v-show="precio==0">(*Ingrese un valor)</span></label>
+                  <input type="number" value="0" step="any" class="form-control" v-model="precio">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Cantidad <span class="text-error" v-show="cantidad==0">(*Ingrese un valor)</span></label>
+                  <input type="number" value="0" class="form-control" v-model="cantidad">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Descuento </label>
+                  <input type="number" value="0" class="form-control" v-model="descuento">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <button @click="agregarDetalle()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Agregar detalle</button>
+                </div>
+              </div>
+            </div>
+            <br/><br/>
+            <div class="form-group row border">
+              <h3>Lista de Ventas a Clientes</h3>
+              <div class="table-responsive col-md-12">
                 <table class="table table-bordered table-striped table-sm">
                   <thead>
                     <tr class="bg-success">
                       <th>Eliminar</th>
                       <th>Producto</th>
-                      <th>Precio</th>
+                      <th>Precio (USD$)</th>
                       <th>Cantidad</th>
-                      <th>Total</th>
+                      <th>Descuento</th>
+                      <th>Total (USD$)</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
-                    <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
+                    <tr v-for="(detalle,index) in arrayDetalle" :key="detalle.id">
                       <td>
                         <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
                           <i class="fa fa-times fa-2x"></i>
                         </button>
                       </td>
-                      <td v-text="detalle.producto"></td>
+                      <td v-text="detalle.producto"> </td>
                       <td>
-                        <input v-model="detalle.precio" type="number" value="3" class="form-control">
+                        <input v-model="detalle.precio" type="number" class="form-control">
                       </td>
                       <td>
-                        <input v-model="detalle.cantidad" type="number" value="2" class="form-control">
+                        <span style="color:red;" v-show="detalle.cantidad>detalle.stock">Stock: {{detalle.stock}}</span>
+                        <input v-model="detalle.cantidad" type="number" class="form-control">
                       </td>
                       <td>
-                        {{ detalle.precio * detalle.cantidad }}
+                        <span style="color:red;" v-show="detalle.descuento>(detalle.precio*detalle.cantidad)">Descuento superior al total</span>
+                        <input v-model="detalle.descuento" type="number" class="form-control">
                       </td>
+                      <td> {{detalle.precio*detalle.cantidad - detalle.descuento}} </td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong> USD$ {{ subTotal=(total-subTotalImpuesto).toFixed(2) }}</strong></td>
+                      <td colspan="5" align="right"><strong>Sub-Total:</strong></td>
+                      <td><strong> USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>USD$ {{ subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2) }}</strong></td>
+                      <td colspan="5" align="right"><strong>Impuesto:</strong></td>
+                      <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Total:</strong></td>
-                      <td><strong>USD$ {{ total=calcularTotal }}</strong></td>
+                      <td colspan="5" align="right"><strong>Total:</strong></td>
+                      <td><strong>USD$ {{total=calcularTotal}}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="5"> No se han agregado productos </td>
+                      <td colspan="6"> No se han agregado productos </td>
                     </tr>
                   </tbody>                                    
                 </table>
               </div>
             </div>
-
             <div class="form-group row">
               <div class="col-md-12">
                 <button type="button" class="btn btn-danger" @click="ocultarDetalle()"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                <button type="button" class="btn btn-success" @click="registrarCompra()"><i class="fa fa-save fa-2x"></i> Registrar Compra</button>
+                <button type="button" class="btn btn-success" @click="registrarVenta()"><i class="fa fa-save fa-2x"></i> Registrar Venta</button>
               </div>
             </div>
           </div>
         </template>
         <!-- Fin Detalle--> 
+        <!-- Ver Venta -->
         <template v-else-if="listado==2">
-          <h2 class="text-center">Detalle de Compra</h2><br/>
-  
+          <h2 class="text-center">Detalle de Venta</h2><br/>
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="text-uppercase"><strong>Proveedor</strong></label>
-                  <p v-text="proveedor"></p>
+                  <label class="text-uppercase"><strong>Cliente</strong></label>
+                  <p v-text="cliente"></p>
                 </div>
               </div>
               <div class="col-md-3">
@@ -268,11 +275,11 @@
                   <label class="text-uppercase"><strong>Tipo de identificación</strong></label>
                   <p v-text="tipo_identificacion"></p>
                 </div>
-              </div>
+              </div>    
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="text-uppercase"><strong>Número Compra</strong></label>
-                  <p v-text="num_compra"></p>
+                  <label class="text-uppercase"><strong>Número Venta</strong></label>
+                  <p v-text="num_venta"></p>
                 </div>
               </div>
               <div class="col-md-3">
@@ -290,34 +297,34 @@
                       <th>Producto</th>
                       <th>Precio (USD$)</th>
                       <th>Cantidad</th>
+                      <th>Descuento</th>
                       <th>Total (USD$)</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
                     <tr v-for="detalle in arrayDetalle" :key="detalle.id">
-                      <td v-text="detalle.producto"></td>
-                      <td v-text="detalle.precio"></td>
-                      <td v-text="detalle.cantidad"></td>
-                      <td> {{detalle.precio*detalle.cantidad}} </td>
+                      <td v-text="detalle.producto"> </td>
+                      <td v-text="detalle.precio"> </td>
+                      <td v-text="detalle.cantidad"> </td>
+                      <td v-text="detalle.descuento"> </td>
+                      <td>{{ detalle.precio * detalle.cantidad - detalle.descuento }} </td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="3" align="right"><strong>Sub-Total:</strong></td>
+                      <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
                       <td><strong>USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="3" align="right"><strong>Impuesto:</strong></td>
+                      <td colspan="4" align="right"><strong>Impuesto:</strong></td>
                       <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="3" align="right"><strong>Total:</strong></td>
+                      <td colspan="4" align="right"><strong>Total:</strong></td>
                       <td><strong>USD$ {{total}}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="4">
-                        No se han agregado productos
-                      </td>
+                      <td colspan="5"> No se han agregado productos </td>
                     </tr>
                   </tbody>                                    
                 </table>
@@ -328,13 +335,13 @@
                 <button type="button" @click="ocultarDetalle()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
               </div>
             </div>
-          </div>
+          </div>            
         </template>
-        <!-- fin ver compra-->
-
+        <!-- fin ver venta-->
       </div>
       <!-- Fin ejemplo de tabla Listado -->
     </div>
+
     <!--Inicio del modal agregar/actualizar-->
     <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -344,8 +351,9 @@
             <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-          </div>                       
+          </div>
           <div class="modal-body">
+
             <div class="form-group row">
               <div class="col-md-6">
                 <div class="input-group">
@@ -358,11 +366,10 @@
                 </div>
               </div>
             </div>
-                            
             <div class="table-responsive">
               <table class="table table-bordered table-striped table-sm">
                 <thead>
-                  <tr class="bg-primary">              
+                  <tr class="bg-primary">                    
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
@@ -372,8 +379,8 @@
                     <th>Acción</th>
                   </tr>
                 </thead>
-                <tbody>                
-                  <tr v-for="producto in arrayProducto" :key="producto.id">
+                <tbody>
+                  <tr v-for="producto in arrayProducto" :key="producto.id">              
                     <td v-text="producto.nombre_categoria"></td>
                     <td v-text="producto.nombre"></td>
                     <td v-text="producto.codigo"></td>
@@ -385,17 +392,17 @@
                       </button>
                       <button type="button" class="btn btn-danger btn-sm" v-else>
                         <i class="fa fa-lock"></i>&nbsp;Desactivado
-                      </button>   
+                      </button>
                     </td>
                     <td>
                       <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-primary btn-sm">
-                      <i class="fa fa-plus fa-2x"></i> Agregar 
+                        <i class="fa fa-plus fa-2x"></i> Agregar 
                       </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>      
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
@@ -417,44 +424,46 @@
   export default {
     data(){
       return {
-        compra_id: 0,
-        idproveedor: 0,
-        proveedor: '',
-        nombre: '',
+        venta_id : 0,
+        idcliente : 0,
+        cliente : '',
         tipo_identificacion : 'FACTURA',
-        num_compra: '',
-        impuesto: 0.20,
-        total: 0.0,
-        subTotalImpuesto: 0.0,
-        subTotal: 0.0,
-        arrayCompra : [],
-        arrayProveedor: [],
-        arrayDetalle: [],
-        listado: 1,
-        modal: 0,
+        num_venta : '',
+        impuesto : 0.20,
+        total : 0.0,
+        subTotalImpuesto : 0.0,
+        subTotal : 0.0,
+        arrayVenta : [],
+        arrayCliente : [],
+        arrayDetalle : [],
+        listado : 1,
+        modal : 0,
         tituloModal : '',
-        tipoAccion: 0,
-        errorCompra : 0,
-        errorMostrarMsjCompra : [],
-        pagination:{            
-          'total': 0,
-          'current_page': 0,
-          'per_page': 0,
-          'last_page': 0,
-          'from': 0,
-          'to': 0,
+        tipoAccion : 0,
+        errorVenta : 0,
+        errorMostrarMsjVenta : [],
+        pagination : {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0,
+    
         },
-        offset: 3,
-        criterio:'num_compra',
-        buscar: '',
-        criterioP: 'nombre',
+        offset:3,
+        criterio:'num_venta',
+        buscar:'',
+        criterioP:'nombre',
         buscarP: '',
         arrayProducto: [],
         idproducto: 0,
         codigo: '',
         producto: '',
         precio: 0,
-        cantidad:0
+        cantidad:0,
+        descuento:0,
+        stock:0
       }
 
     },
@@ -488,63 +497,65 @@
       },
       calcularTotal: function(){
         var resultado = 0.0;
-        for(var i = 0; i < this.arrayDetalle.length; i++){
-          resultado = resultado + (this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad)
+        for( var i=0; i < this.arrayDetalle.length; i++){
+          resultado = resultado + (this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad - this.arrayDetalle[i].descuento)
         }
         return resultado;
       }
     },
 
     methods:{
-      listarCompra(page, buscar, criterio){
-        let me=this;
-        var url= '/compra?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
+      listarVenta(page,buscar,criterio){
+        let me = this;
+        var url = '/venta?page=' + page + '&buscar='+ buscar + '&criterio=' + criterio;
         axios.get(url).then(function (response) {
           var respuesta = response.data;
-          me.arrayCompra = respuesta.compras.data;
+          me.arrayVenta = respuesta.ventas.data;
           me.pagination = respuesta.pagination;
         })
         .catch(function (error) {
           console.log(error);
         });
       },
-
-      selectProveedor(search, loading){
+      selectCliente(search, loading){
         let me = this;
         loading(true)
-        var url= '/proveedor/selectProveedor?filtro='+search;
+        var url = '/cliente/selectCliente?filtro=' + search;
         axios.get(url).then(function (response) {
           let respuesta = response.data;
           q: search
-          me.arrayProveedor = respuesta.proveedores;
+          me.arrayCliente = respuesta.clientes;
           loading(false)
         })
         .catch(function (error) {
           console.log(error);
         });
       },
-      getDatosProveedor( val1 ){
+
+      getDatosCliente(val1){
         let me = this;
         me.loading = true;
-        me.idproveedor = val1.id;
+        me.idcliente = val1.id;
       },
+
       buscarProducto(){
         let me = this;
-        var url = '/producto/buscarProducto?filtro=' + me.codigo;
-
+        var url = '/producto/buscarProductoVenta?filtro=' + me.codigo;
         axios.get(url).then(function (response) {
           var respuesta = response.data;
           me.arrayProducto = respuesta.productos;
           if( me.arrayProducto.length > 0 ){
             me.producto = me.arrayProducto[0]['nombre'];
             me.idproducto = me.arrayProducto[0]['id'];
+            me.precio = me.arrayProducto[0]['precio_venta'];
+            me.stock = me.arrayProducto[0]['stock'];
           }
           else{
             me.producto = 'No existe el producto';
             me.idproducto = 0;
           }
         })
-        .catch(function (error) {
+        .catch( function (error) {
           console.log(error);
         });
       },
@@ -556,20 +567,21 @@
         me.listarCompra(page,buscar,criterio);
       },
 
-      encuentra(id){
+
+      encuentra( id ){
         var sw = 0;
-        for(var i = 0; i < this.arrayDetalle.length; i++){
+        for( var i=0; i < this.arrayDetalle.length; i++){
           if( this.arrayDetalle[i].idproducto == id ){
             sw = true;
           }
         }
         return sw;
       },
-
       eliminarDetalle(index){
         let me = this;
         me.arrayDetalle.splice(index, 1);
       },
+
       agregarDetalle(){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
@@ -579,32 +591,44 @@
           buttonsStyling: false
         })
         let me = this;
-        if( me.idproducto == 0 || me.cantidad == 0 || me.precio == 0 ){
-        }
-        else{
-          if( me.encuentra(me.idproducto) ){
+        if( me.idproducto==0 || me.cantidad==0 || me.precio==0 ){
+        } else {
+          if(me.encuentra(me.idproducto)){
             swalWithBootstrapButtons.fire({
               type: 'error',
               title: 'Error...',
               text: 'Ese producto ya fue agregado',
             })
+          } else {
+            if( me.cantidad>me.stock ){
+              swalWithBootstrapButtons.fire({
+                type: 'error',
+                title: 'Error...',
+                text: 'No hay stock disponible',
+              })
+            } else {
+              me.arrayDetalle.push({
+                  idproducto: me.idproducto,
+                  producto: me.producto,
+                  cantidad: me.cantidad,
+                  precio: me.precio,
+                  descuento: me.descuento,
+                  stock: me.stock
+              });
+              me.codigo = "";
+              me.idproducto = 0;
+              me.producto = "";
+              me.cantidad = 0;
+              me.precio = 0;
+              me.descuento = 0;
+              me.stock = 0
+            }
           }
-          else{
-            me.arrayDetalle.push({
-              idproducto: me.idproducto,
-              producto: me.producto,
-              cantidad: me.cantidad,
-              precio: me.precio
-            });
-            me.codigo = "";
-            me.idproducto = 0;
-            me.producto = "";
-            me.cantidad = 0;
-            me.precio = 0; 
-          }
-        }             
+        }
       },
-      agregarDetalleModal( data = [] ){
+
+
+      agregarDetalleModal( data=[] ){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-success',
@@ -612,27 +636,29 @@
           },
           buttonsStyling: false
         })
-        let me = this;
+        let me=this;
         if(me.encuentra(data['id'])){
           swalWithBootstrapButtons.fire({
             type: 'error',
             title: 'Error...',
             text: 'Ese producto ya fue agregado',
           })
-        }
-        else{
+        } else {
           me.arrayDetalle.push({
-            idproducto: data['id'],
-            producto: data['nombre'],
-            cantidad: 1,
-            precio: 1
+              idproducto: data['id'],
+              producto: data['nombre'],
+              cantidad: 1,
+              precio: data['precio_venta'],
+              descuento:0,
+              stock:data['stock']
           }); 
         }
       },
 
-      listarProducto (buscar,criterio){
-        let me = this;
-        var url = '/producto/listarProducto?buscar='+ buscar + '&criterio='+ criterio;
+
+      listarProducto(buscar, criterio){
+        let me=this;
+        var url= '/producto/listarProductoVenta?buscar='+ buscar + '&criterio='+ criterio;
         axios.get(url).then(function (response) {
           var respuesta= response.data;
           me.arrayProducto = respuesta.productos.data;
@@ -642,103 +668,114 @@
         });
       },
 
-      registrarCompra(){
-        if( this.validarCompra() ){
+      registrarVenta(){
+        if(this.validarVenta()){
           return;
         }
         let me = this;
-        axios.post('/compra/registrar',{
-          'idproveedor': this.idproveedor,
+        axios.post('/venta/registrar',{
+          'idcliente': this.idcliente,
           'tipo_identificacion': this.tipo_identificacion,
-          'num_compra' : this.num_compra,
+          'num_venta' : this.num_venta,
           'impuesto' : this.impuesto,
           'total' : this.total,
           'data': this.arrayDetalle
         }).then(function (response) {
-          me.listado = 1;
-          me.listarCompra(1,'','num_compra');
-          me.idproveedor = 0;
-          me.tipo_identificacion = 'FACTURA';
-          me.num_compra = '';
-          me.impuesto = 0.20;
-          me.total = 0.0;
-          me.idproducto = 0;
-          me.producto = '';
-          me.cantidad = 0;
-          me.precio = 0;
-          me.arrayDetalle = [];
+          me.listado=1;
+          me.listarVenta(1,'','num_venta');
+          me.idcliente=0;
+          me.tipo_identificacion='FACTURA';
+          me.num_venta='';
+          me.impuesto=0.20;
+          me.total=0.0;
+          me.idproducto=0;
+          me.producto='';
+          me.cantidad=0;
+          me.precio=0;
+          me.stock=0;
+          me.codigo='';
+          me.descuento=0;
+          me.arrayDetalle=[];
         }).catch(function (error) {
-            console.log(error);
+          console.log(error);
         });
       },
 
-      validarCompra(){
-        this.errorCompra = 0;
-        this.errorMostrarMsjCompra = [];
-        if (this.idproveedor == 0) this.errorMostrarMsjCompra.push("Seleccione un Proveedor");
-        if (this.tipo_identificacion == 0) this.errorMostrarMsjCompra.push("Seleccione la identificación");
-        if (!this.num_compra) this.errorMostrarMsjCompra.push("Ingrese el número de compra");
-        if (!this.impuesto) this.errorMostrarMsjCompra.push("Ingrese el impuesto de compra");
-        if (this.arrayDetalle.length <= 0) this.errorMostrarMsjCompra.push("Ingrese detalles");
-        if (this.errorMostrarMsjCompra.length) this.errorCompra = 1;
-        return this.errorCompra;
-      },
-      mostrarDetalle(){
+      validarVenta(){
         let me = this;
-        me.listado = 0;
-        me.idproveedor = 0;
-        me.tipo_identificacion = 'FACTURA';
-        me.num_compra = '';
-        me.impuesto = 0.20;
-        me.total = 0.0;
-        me.idproducto = 0;
-        me.producto = '';
-        me.cantidad = 0;
-        me.precio = 0;
-        me.arrayDetalle = [];
+        me.errorVenta = 0;
+        me.errorMostrarMsjVenta = [];
+        var prod;
+        me.arrayDetalle.map(function(x){
+          if( x.cantidad>x.stock ){
+            prod = x.producto + " con stock insuficiente";
+            me.errorMostrarMsjVenta.push(prod);
+          }
+        });
+        if( me.idcliente == 0 ) me.errorMostrarMsjVenta.push("Seleccione un Cliente");
+        if( me.tipo_identificacion == 0 ) me.errorMostrarMsjVenta.push("Seleccione la identificación");
+        if( !me.num_venta ) me.errorMostrarMsjVenta.push("Ingrese el número de venta");
+        if( !me.impuesto ) me.errorMostrarMsjVenta.push("Ingrese el impuesto de venta");
+        if( me.arrayDetalle.length <= 0 ) me.errorMostrarMsjVenta.push("Ingrese detalles");
+        if( me.errorMostrarMsjVenta.length ) me.errorVenta = 1;
+        return me.errorVenta;
       },
+
+      mostrarDetalle(){
+        let me= this;       
+        me.listado=0;
+        me.idproveedor=0;
+        me.tipo_identificacion='FACTURA';
+        me.num_compra='';
+        me.impuesto=0.20;
+        me.total=0.0;
+        me.idproducto=0;
+        me.producto='';
+        me.cantidad=0;
+        me.precio=0;
+        me.arrayDetalle=[];
+      },
+
       ocultarDetalle(){
-        this.listado = 1;
+        this.listado=1;
       },
-      verCompra(id){
+      verVenta(id){
         let me = this;
         me.listado = 2;
-        var arrayCompraT = [];
-        var url = '/compra/obtenerCabecera?id='+id;
-        
+        var arrayVentaT = [];
+        var url = '/venta/obtenerCabecera?id=' + id;
         axios.get(url).then(function (response) {
-          var respuesta= response.data;
-          arrayCompraT = respuesta.compra;
-          me.proveedor = arrayCompraT[0]['nombre'];
-          me.tipo_identificacion=arrayCompraT[0]['tipo_identificacion'];
-          me.num_compra=arrayCompraT[0]['num_compra'];
-          me.impuesto=arrayCompraT[0]['impuesto'];
-          me.total=arrayCompraT[0]['total'];
+          var respuesta = response.data;
+          arrayVentaT = respuesta.venta;
+          me.cliente = arrayVentaT[0]['nombre'];
+          me.tipo_identificacion = arrayVentaT[0]['tipo_identificacion'];
+          me.num_venta = arrayVentaT[0]['num_venta'];
+          me.impuesto = arrayVentaT[0]['impuesto'];
+          me.total = arrayVentaT[0]['total'];
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         });
-        //Obtener los datos de los detalles 
-        var urld = '/compra/obtenerDetalles?id='+id;        
+        var urld = '/venta/obtenerDetalles?id=' + id;
         axios.get(urld).then(function (response) {
-            console.log(response);
-            var respuesta= response.data;
-            me.arrayDetalle = respuesta.detalles;
+          console.log(response);
+          var respuesta = response.data;
+          me.arrayDetalle = respuesta.detalles;
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         });     
       },
       cerrarModal(){
         this.modal = 0;
-        this.tituloModal = '';      
+        this.tituloModal = '';
       },
-      abrirModal(){
-        this.arrayProducto = [];
+      abrirModal(){            
+        this.arrayProducto=[];
         this.modal = 1;
-        this.tituloModal = 'Seleccione uno o varios productos';                        
+        this.tituloModal = 'Seleccione uno o varios productos';                            
       },
-      desactivarCompra(id){
+      desactivarVenta(id){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-success',
@@ -747,7 +784,7 @@
           buttonsStyling: false
         })
         swalWithBootstrapButtons.fire({
-          title: 'Esta seguro de anular la compra?',
+          title: 'Esta seguro de anular la venta?',
           //type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -761,62 +798,60 @@
         }).then((result) => {
           if (result.value) {
             let me = this;
-            axios.put('/compra/desactivar',{
-              'id': id
+            axios.put('/venta/desactivar',{
+                'id': id
             }).then(function (response) {
-              me.listarCompra(1,'','num_compra');
+              me.listarVenta(1,'','num_venta');
               swalWithBootstrapButtons.fire(
                 'Anulado!',
-                'La compra ha sido anulada con éxito.',
+                'La venta ha sido anulada con éxito.',
                 'success'
               )
             }).catch(function (error) {
                 console.log(error);
             });
-          } else if (     
+          } else if (
             result.dismiss === swal.DismissReason.cancel
-          ) {
-              
+          ) {     
           }
         }) 
-      }
+      },
+
     },
         
     mounted() {
-      this.listarCompra(1, this.buscar, this.criterio);
+      this.listarVenta(1, this.buscar, this.criterio);
     }
   }
 </script>
 
 <style>
   .modal-content{
-    width:100% !important;
-    position:absolute !important;
+    width : 100% !important;
+    position : absolute !important;
   }
 
   .mostrar{
-    display:list-item !important;
-    opacity:1 !important;
-    position:absolute !important;
-    background-color: #3c29297a !important;
+    display : list-item !important;
+    opacity : 1 !important;
+    position : absolute !important;
+    background-color : #3c29297a !important;
   }
 
   .div-error{
-    display:flex;
-    justify-content:center;
+    display : flex;
+    justify-content : center;
   }
 
   .text-error{
-    color: red !important;
-    font-weight: bold;
-    font-size: 20px;
+    color : red !important;
+    font-weight : bold;
+    font-size : 20px;
   }
 
-  @media( min-width: 600px ){
-    .btnagregar{
-      margin-top: 2rem;
+  @media (min-width: 600px) {
+    .btnagregar {
+      margin-top : 2rem;
     }
   }
-
-
 </style>

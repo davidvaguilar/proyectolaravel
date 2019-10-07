@@ -16,7 +16,6 @@ Route::group(['middleware' =>['guest']], function(){
     Route::post('/login', 'Auth\LoginController@login')->name('login');
 });
 
-
 Route::group(['middleware' =>['auth']], function(){
     
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -49,6 +48,8 @@ Route::group(['middleware' =>['auth']], function(){
         Route::get('/compra', 'CompraController@index');
         Route::post('/compra/registrar', 'CompraController@store');
         Route::put('/compra/desactivar', 'CompraController@desactivar');
+        Route::get('/compra/obtenerCabecera', 'CompraController@obtenerCabecera');
+        Route::get('/compra/obtenerDetalles', 'CompraController@obtenerDetalles');
     });
 
     Route::group(['middleware' =>['Vendedor']], function(){
@@ -64,11 +65,19 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/producto/actualizar', 'ProductoController@update');
         Route::put('/producto/desactivar', 'ProductoController@desactivar');
         Route::put('/producto/activar', 'ProductoController@activar');
+        Route::get('/producto/buscarProductoVenta', 'ProductoController@buscarProductoVenta');
+        Route::get('/producto/listarProductoVenta', 'ProductoController@listarProductoVenta');
 
         Route::get('/cliente', 'ClienteController@index');
         Route::post('/cliente/registrar', 'ClienteController@store');
         Route::put('/cliente/actualizar', 'ClienteController@update');
+        Route::get('/cliente/selectCliente', 'ClienteController@selectCliente');
     
+        Route::get('/venta', 'VentaController@index');
+        Route::post('/venta/registrar', 'VentaController@store');
+        Route::put('/venta/desactivar', 'VentaController@desactivar');
+        Route::get('/venta/obtenerCabecera', 'VentaController@obtenerCabecera');
+        Route::get('/venta/obtenerDetalles', 'VentaController@obtenerDetalles');
     });
 
     Route::group(['middleware' =>['Administrador']], function(){
@@ -86,6 +95,8 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/producto/activar', 'ProductoController@activar');
         Route::get('/producto/buscarProducto', 'ProductoController@buscarProducto');
         Route::get('/producto/listarProducto', 'ProductoController@listarProducto');
+        Route::get('/producto/buscarProductoVenta', 'ProductoController@buscarProductoVenta');
+        Route::get('/producto/listarProductoVenta', 'ProductoController@listarProductoVenta');
 
         Route::get('/proveedor', 'ProveedorController@index');
         Route::post('/proveedor/registrar', 'ProveedorController@store');
@@ -95,10 +106,19 @@ Route::group(['middleware' =>['auth']], function(){
         Route::get('/compra', 'CompraController@index');
         Route::post('/compra/registrar', 'CompraController@store');
         Route::put('/compra/desactivar', 'CompraController@desactivar');
+        Route::get('/compra/obtenerCabecera', 'CompraController@obtenerCabecera');
+        Route::get('/compra/obtenerDetalles', 'CompraController@obtenerDetalles');
 
         Route::get('/cliente', 'ClienteController@index');
         Route::post('/cliente/registrar', 'ClienteController@store');
         Route::put('/cliente/actualizar', 'ClienteController@update');
+        Route::get('/cliente/selectCliente', 'ClienteController@selectCliente');
+
+        Route::get('/venta', 'VentaController@index');
+        Route::post('/venta/registrar', 'VentaController@store');
+        Route::put('/venta/desactivar', 'VentaController@desactivar');
+        Route::get('/venta/obtenerCabecera', 'VentaController@obtenerCabecera');
+        Route::get('/venta/obtenerDetalles', 'VentaController@obtenerDetalles');
 
         Route::get('/rol', 'RolController@index');
         Route::get('/rol/selectRol', 'RolController@selectRol');

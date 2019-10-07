@@ -23,7 +23,7 @@ Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
 Vue.component('compra', require('./components/Compra.vue'));
-
+Vue.component('venta', require('./components/Venta.vue'));
 
 const app = new Vue({
     el: '#app',

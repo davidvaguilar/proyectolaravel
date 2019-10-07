@@ -20,7 +20,7 @@
         <proveedor></proveedor>
       </template>
       <template v-if="menu==5">
-        <h1>Contenido 5</h1>
+        <venta></venta>
       </template>
       <template v-if="menu==6">
         <cliente></cliente>
@@ -43,7 +43,7 @@
         <producto></producto>
       </template>
       <template v-if="menu==5">
-        <h1>Contenido 5</h1>
+        <venta></venta>
       </template>
       <template v-if="menu==6">
         <cliente></cliente>
@@ -60,7 +60,7 @@
         <producto></producto>
       </template>
       <template v-if="menu==3">
-        <h1>Contenido 3</h1>
+        <compra></compra>
       </template>
       <template v-if="menu==4">
         <proveedor></proveedor>
