@@ -35672,11 +35672,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36025,7 +36020,10 @@ var render = function() {
           _vm._v(" "),
           _c(
             "table",
-            { staticClass: "table table-bordered table-striped table-sm" },
+            {
+              staticClass:
+                "table table-bordered table-striped table-sm text-center"
+            },
             [
               _vm._m(1),
               _vm._v(" "),
@@ -36043,28 +36041,8 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [
                       categoria.condicion
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success btn-md",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-check fa-2x" }),
-                              _vm._v(" Activo\n                ")
-                            ]
-                          )
-                        : _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger btn-sm",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-times fa-2x" }),
-                              _vm._v(" Desactivado\n                ")
-                            ]
-                          )
+                        ? _c("i", { staticClass: "fa fa-check fa-2x" })
+                        : _c("i", { staticClass: "fa fa-times fa-2x" })
                     ]),
                     _vm._v(" "),
                     _c("td", [
@@ -36083,10 +36061,7 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("i", { staticClass: "fa fa-edit fa-2x" }),
-                          _vm._v(" Editar\n                ")
-                        ]
+                        [_c("i", { staticClass: "fa fa-edit fa-2x" })]
                       ),
                       _vm._v("  \n              ")
                     ]),
@@ -36865,7 +36840,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     cargarPdf: function cargarPdf() {
-      window.open('http://127.0.0.1:8000/producto/listarPdf', '_blank');
+      //document.execCommand('print');
+      window.open('http://localhost:8000/producto/listarPdf', '_blank');
     },
     selectCategoria: function selectCategoria() {
       var me = this;

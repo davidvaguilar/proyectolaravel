@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Categoría</th>
@@ -37,21 +37,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="categoria in arrayCategoria" :key="categoria.id">
-        
+              <tr v-for="categoria in arrayCategoria" :key="categoria.id">        
                 <td v-text="categoria.nombre"></td>
                 <td v-text="categoria.descripcion"></td>
-                <td>
-                  <button type="button" class="btn btn-success btn-md" v-if="categoria.condicion">
-                    <i class="fa fa-check fa-2x"></i> Activo
-                  </button>
-                  <button type="button" class="btn btn-danger btn-sm" v-else>
-                    <i class="fa fa-times fa-2x"></i> Desactivado
-                  </button>
+                <td>            
+                  <i class="fa fa-check fa-2x" v-if="categoria.condicion"></i>              
+                  <i class="fa fa-times fa-2x" v-else></i>                 
                 </td>
                 <td>
                   <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'categoria', 'actualizar', categoria)">
-                    <i class="fa fa-edit fa-2x"></i> Editar
+                    <i class="fa fa-edit fa-2x"></i>
                   </button> &nbsp;
                 </td>
                 <td>         

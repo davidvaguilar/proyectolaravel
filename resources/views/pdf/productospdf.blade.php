@@ -112,6 +112,11 @@
   </div>
   <div class="izquierda">
       <p><strong>Total de registros: </strong>{{$cont}}</p>
-  </div>    
+  </div> 
+  <script type="text/javascript">
+  try {
+    this.print();
+  }
+  </script>
 </body>
 </html>
