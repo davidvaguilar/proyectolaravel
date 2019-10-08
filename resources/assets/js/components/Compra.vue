@@ -552,7 +552,7 @@
         });
       },
       pdfCompra(id){
-        window.open('http://127.0.0.1:8000/compra/pdf/'+id+','+ '_blank');
+        window.open('http://'+window.location.host+'/compra/pdf/'+id+','+ '_blank');
       },
 
       cambiarPagina(page, buscar, criterio){     

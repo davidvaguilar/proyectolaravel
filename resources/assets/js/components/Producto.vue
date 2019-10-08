@@ -266,8 +266,8 @@
         });
       },
       cargarPdf(){
-        //document.execCommand('print');
-        window.open('http://localhost:8000/producto/listarPdf', '_blank');
+        //alert(window.location.host);
+        window.open('http://'+window.location.host+'/producto/listarPdf', '_blank');
       },
       selectCategoria(){
         let me = this;

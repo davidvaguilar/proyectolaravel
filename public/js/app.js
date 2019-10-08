@@ -36840,8 +36840,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     cargarPdf: function cargarPdf() {
-      //document.execCommand('print');
-      window.open('http://localhost:8000/producto/listarPdf', '_blank');
+      //alert(window.location.host);
+      window.open('http://' + window.location.host + '/producto/listarPdf', '_blank');
     },
     selectCategoria: function selectCategoria() {
       var me = this;
@@ -45597,7 +45597,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     pdfCompra: function pdfCompra(id) {
-      window.open('http://127.0.0.1:8000/compra/pdf/' + id + ',' + '_blank');
+      window.open('http://' + window.location.host + '/compra/pdf/' + id + ',' + '_blank');
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;
@@ -48777,7 +48777,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     pdfVenta: function pdfVenta(id) {
-      window.open('http://127.0.0.1:8000/venta/pdf/' + id + ',' + '_blank');
+      //alert(window.location.host);
+      window.open('http://' + window.location.host + '/venta/pdf/' + id + ',' + '_blank');
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;

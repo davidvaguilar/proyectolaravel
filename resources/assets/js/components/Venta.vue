@@ -564,7 +564,8 @@
         });
       },
       pdfVenta(id){
-        window.open('http://127.0.0.1:8000/venta/pdf/'+id+','+ '_blank');
+        //alert(window.location.host);
+        window.open('http://'+window.location.host+'/venta/pdf/'+id+','+ '_blank');
       },
 
       cambiarPagina(page, buscar, criterio){     
