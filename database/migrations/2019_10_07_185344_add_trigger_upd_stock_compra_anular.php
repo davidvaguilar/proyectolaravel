@@ -14,12 +14,12 @@ class AddTriggerUpdStockCompraAnular extends Migration
     public function up()
     {
         DB::unprepared(
-            'CREATE TRIGGER tr_updStockCompraAnular AFTER UPDATE ON `compras` FOR EACH ROW
+            'CREATE TRIGGER tr_updStockCompraAnular AFTER UPDATE ON compras FOR EACH ROW
             BEGIN
-                UPDATE `productos p` JOIN `detalle_compras di` 
-                    ON `di.idproducto` = `p.id` 
-                    AND `di.idcompra` = NEW.id                
-                SET `p.stock` = `p.stock` + `di.cantidad`;
+                UPDATE productos p JOIN detalle_compras di 
+                    ON di.idproducto = p.id 
+                    AND di.idcompra = NEW.id                  
+                SET p.stock = p.stock - di.cantidad;
             END'
         );
     }
@@ -31,6 +31,6 @@ class AddTriggerUpdStockCompraAnular extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER `tr_updStockCompraAnular`');
+        DB::unprepared('DROP TRIGGER tr_updStockCompraAnular');
     }
 }

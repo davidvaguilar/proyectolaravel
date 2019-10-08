@@ -14,12 +14,12 @@ class AddTriggerUpdStockVentaAnular extends Migration
     public function up()
     {
         DB::unprepared(
-            'CREATE TRIGGER tr_updStockVentaAnular AFTER UPDATE ON `ventas` FOR EACH ROW
+            'CREATE TRIGGER tr_updStockVentaAnular AFTER UPDATE ON ventas FOR EACH ROW
             BEGIN
-                UPDATE `productos p` JOIN `detalle_ventas dv` 
-                    ON `dv.idproducto` = `p.id` 
-                    AND `dv.idventa` = NEW.id                
-                SET `p.stock` = `p.stock` + `dv.cantidad`;
+                UPDATE productos p JOIN detalle_ventas dv 
+                    ON dv.idproducto = p.id
+                    AND dv.idventa = NEW.id                
+                SET p.stock = p.stock + dv.cantidad;
             END'
         );
     }
@@ -31,6 +31,6 @@ class AddTriggerUpdStockVentaAnular extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER `tr_updStockVentaAnular`');
+        DB::unprepared('DROP TRIGGER tr_updStockVentaAnular');
     }
 }
