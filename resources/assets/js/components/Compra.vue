@@ -552,7 +552,7 @@
         });
       },
       pdfCompra(id){
-        window.open('http://'+window.location.host+'/compra/pdf/'+id+','+ '_blank');
+        window.open('http://tienda.dyi.cl/compra/pdf/'+id+','+ '_blank');
       },
 
       cambiarPagina(page, buscar, criterio){     

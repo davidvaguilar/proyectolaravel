@@ -36841,7 +36841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     cargarPdf: function cargarPdf() {
       //alert(window.location.host);
-      window.open('http://' + window.location.host + '/producto/listarPdf', '_blank');
+      window.open('http://tienda.dyi.cl/producto/listarPdf', '_blank');
     },
     selectCategoria: function selectCategoria() {
       var me = this;
@@ -45597,7 +45597,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     pdfCompra: function pdfCompra(id) {
-      window.open('http://' + window.location.host + '/compra/pdf/' + id + ',' + '_blank');
+      window.open('http://tienda.dyi.cl/compra/pdf/' + id + ',' + '_blank');
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;
@@ -48778,7 +48778,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     pdfVenta: function pdfVenta(id) {
       //alert(window.location.host);
-      window.open('http://' + window.location.host + '/venta/pdf/' + id + ',' + '_blank');
+      window.open('http://tienda.dyi.cl/venta/pdf/' + id + ',' + '_blank');
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;
