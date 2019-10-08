@@ -23,7 +23,7 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Rol</th>
@@ -32,16 +32,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="rol in arrayRol" :key="rol.id">
-        
+              <tr v-for="rol in arrayRol" :key="rol.id">        
                 <td v-text="rol.nombre"></td>
                 <td v-text="rol.descripcion"></td>
                 <td>
                   <button type="button" class="btn btn-success btn-md" v-if="rol.condicion">
-                    <i class="fa fa-check fa-2x"></i> Activo
+                    <i class="fa fa-check fa-2x"></i> 
                   </button>
                   <button type="button" class="btn btn-danger btn-sm" v-else>
-                    <i class="fa fa-times fa-2x"></i> Desactivado
+                    <i class="fa fa-times fa-2x"></i>
                   </button>
                 </td>                
               </tr>                  

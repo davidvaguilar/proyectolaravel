@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Proveedor</th>
@@ -41,8 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="proveedor in arrayProveedor" :key="proveedor.id">
-        
+              <tr v-for="proveedor in arrayProveedor" :key="proveedor.id">        
                 <td v-text="proveedor.nombre"></td>
                 <td v-text="proveedor.tipo_documento"></td>
                 <td v-text="proveedor.num_documento"></td>
@@ -50,8 +49,8 @@
                 <td v-text="proveedor.email"></td>
                 <td v-text="proveedor.direccion"></td>               
                 <td>
-                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'proveedor', 'actualizar', proveedor)">
-                    <i class="fa fa-edit fa-2x"></i> Editar
+                  <button type="button" class="btn btn-info btn-md" @click="abrirModal('proveedor', 'actualizar', proveedor)">
+                    <i class="fa fa-edit fa-2x"></i>
                   </button> &nbsp;
                 </td>                
               </tr>                  

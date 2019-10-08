@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Cliente</th>
@@ -41,8 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="cliente in arrayCliente" :key="cliente.id">
-        
+              <tr v-for="cliente in arrayCliente" :key="cliente.id">        
                 <td v-text="cliente.nombre"></td>
                 <td v-text="cliente.tipo_documento"></td>
                 <td v-text="cliente.num_documento"></td>
@@ -51,7 +50,7 @@
                 <td v-text="cliente.direccion"></td>               
                 <td>
                   <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'cliente', 'actualizar', cliente)">
-                    <i class="fa fa-edit fa-2x"></i> Editar
+                    <i class="fa fa-edit fa-2x"></i>
                   </button> &nbsp;
                 </td>                
               </tr>                  

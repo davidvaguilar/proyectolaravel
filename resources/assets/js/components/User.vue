@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Nombre</th>
@@ -40,7 +40,7 @@
                 <th>Rol</th>
                 <th>Imagen</th>
                 <th>Editar</th>
-                <th>Estado</th>
+                <th>Cambiar estado</th>
               </tr>
             </thead>
             <tbody>
@@ -53,11 +53,11 @@
                 <td v-text="usuario.usuario"></td>          
                 <td v-text="usuario.rol"></td>         
                 <td>
-                  <img :src="'img/usuario/'+usuario.imagen" class="img-responsive" width="100px" height="100px">
+                  <img :src="'img/usuario/'+usuario.imagen" class="img-responsive" width="50px" height="50px">
                 </td>
                 <td>
-                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'usuario', 'actualizar', usuario)">
-                    <i class="fa fa-edit fa-2x"></i> Editar
+                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'usuario', 'actualizar', usuario)" title="EDITAR">
+                    <i class="fa fa-edit fa-2x"></i>
                   </button> &nbsp;
                 </td> 
                 <td>         
@@ -327,14 +327,18 @@
       },
       subirImagen(e){                
         let me = this;
-        let file = e.target.files[0];
-        console.log(file);
-        let reader = new FileReader();
-        reader.onloadend = (file) => {            
-            //console.log('RESULT', reader.result)
-            me.imagen = reader.result;
+        if( e.target.files.length == 1 ){ //Bloque if else Creacion 
+          let file = e.target.files[0];
+          console.log(file);
+          let reader = new FileReader();
+          reader.onloadend = (file) => {            
+              //console.log('RESULT', reader.result)
+              me.imagen = reader.result;
+          }
+          reader.readAsDataURL(file);
+        } else {
+          me.imagen = "";
         }
-        reader.readAsDataURL(file);
       },
       actualizarUsuario(){
         if( this.validarUsuario() ){

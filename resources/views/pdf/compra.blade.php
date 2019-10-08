@@ -134,25 +134,24 @@
       </div>
     </header>
     <br>
-        
     @endforeach
     <br>
     <section>
       <div>
-          <table id="faccomprador">
-              <thead>
-                  <tr id="fv">
-                      <th>COMPRADOR</th>
-                      <th>FECHA COMPRA</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>{{ $v->usuario }}</td>
-                      <td>{{ $v->created_at }}</td>
-                  </tr>
-              </tbody>
-          </table>
+        <table id="faccomprador">
+          <thead>
+            <tr id="fv">
+              <th>COMPRADOR</th>
+              <th>FECHA COMPRA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center">{{ $v->usuario }}</td>
+              <td align="center">{{ $v->created_at }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
     <br>
@@ -163,18 +162,18 @@
             <tr id="fa">
                 <th>CANTIDAD</th>
                 <th>PRODUCTO</th>
-                <th>PRECIO COMPRA</th>
-                <th>CANTIDAD*PRECIO</th>
+                <th>PRECIO UNITARIO</th>
                 <th>PRECIO TOTAL</th>
+                <!--<th>PRECIO TOTAL</th>-->
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             @foreach( $detalles as $det )
             <tr>
-              <td>{{ $det->cantidad }}</td>
-              <td>{{ $det->producto }}</td>
-              <td>{{ $det->precio }}</td>
-              <td>{{ $det->cantidad * $det->precio }}</td>
+              <td align="center">{{ $det->cantidad }}</td>
+              <td align="center">{{ $det->producto }}</td>
+              <td align="center">{{ $det->precio }}</td>
+              <td align="center">{{ $det->cantidad * $det->precio }}</td>
             </tr>
             @endforeach
           </tbody>
@@ -182,24 +181,21 @@
             @foreach ($compra as $v)
             <tr>
               <th></th>
+              <th></th>  <!--<th></th> -->
+              <th align="right">SUBTOTAL</th>
+              <td align="right">$ {{ round($v->total - ($v->total * $v->impuesto), 2) }}</td>
+            </tr>
+            <tr>
               <th></th>
-              <th></th>
-              <th>SUBTOTAL</th>
-              <td>$ {{ round($v->total - ($v->total * $v->impuesto), 2) }}</td>
+              <th></th>   <!--<th></th> -->
+              <th align="right">IVA</th>
+              <td align="right">$ {{ round($v->total * $v->impuesto, 2) }}</td>
             </tr>
             <tr>
               <th></th>
               <th></th>
-              <th></th>
-              <th>Impuesto</th>
-              <td>$ {{ round($v->total * $v->impuesto, 2) }}</td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th>TOTAL</th>
-              <td>$ {{ $v->total }}</td>
+              <th align="right">TOTAL</th>
+              <td align="right"><strong>$ {{ $v->total }}</strong></td>
             </tr>
             @endforeach
           </tfoot>

@@ -6,7 +6,7 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header">
-          <h3 class="text-primary text-center">COMPRAS Y VENTAS</h3>
+        <h3 class="text-primary text-center">COMPRAS Y VENTAS</h3>
       </div>
       <div class="car-body">
         <div class="row">
@@ -117,12 +117,12 @@
         });
       },
       loadVentas(){
-        let me=this;
+        let me = this;
         me.ventas.map(function(x){
           me.varMesVenta.push(x.mes);
           me.varTotalVenta.push(x.total);
         });
-        me.varVenta=document.getElementById('ventas').getContext('2d');
+        me.varVenta = document.getElementById('ventas').getContext('2d');
 
         me.charVenta = new Chart(me.varVenta, {
           type: 'bar',

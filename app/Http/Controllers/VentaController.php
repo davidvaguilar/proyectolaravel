@@ -103,13 +103,13 @@ class VentaController extends Controller
         if ( !$request->ajax() ) return redirect('/');
         try{
             DB::beginTransaction();
-            $mytime= Carbon::now('America/Santiago');
+            $mytime = Carbon::now('America/Santiago');
             $venta = new Venta();
             $venta->idcliente = $request->idcliente;
             $venta->idusuario = \Auth::user()->id;
             $venta->tipo_identificacion = $request->tipo_identificacion;
             $venta->num_venta = $request->num_venta;
-            $venta->fecha_venta = $mytime->toDateString();
+            $venta->fecha_venta = $mytime->toDateTimeString();
             $venta->impuesto = $request->impuesto;
             $venta->total = $request->total;
             $venta->estado = 'Registrado';

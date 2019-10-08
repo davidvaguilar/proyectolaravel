@@ -31,7 +31,7 @@
                 </div>
               </div>
             </div>
-            <table class="table table-bordered table-striped table-sm">
+            <table class="table table-bordered table-striped table-sm text-center">
               <thead>
                 <tr class="bg-primary">
                   <th>Ver Detalle</th>
@@ -44,15 +44,15 @@
                   <th>Impuesto</th>
                   <th>Estado</th>
                   <th>Cambiar estado</th>
-                  <th>Descargar Reporte</th>
+                  <th>Descargar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="venta in arrayVenta" :key="venta.id">
                   <td>
                     <!--compra.id-->
-                    <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
-                      <i class="fa fa-eye fa-2x"></i> Ver detalle
+                    <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm" title="DETALLE">
+                      <i class="fa fa-eye fa-2x"></i>
                     </button> &nbsp;
                   </td>
                   <td v-text="venta.fecha_venta"></td>
@@ -60,14 +60,14 @@
                   <td v-text="venta.nombre"></td>
                   <td v-text="venta.tipo_identificacion"></td> 
                   <td v-text="venta.usuario"></td> 
-                  <td v-text="venta.total"></td>
-                  <td v-text="venta.impuesto"></td>
+                  <td v-text="'$ '+venta.total"></td>
+                  <td v-text="venta.impuesto * 100 + ' %'"></td>
                   <td>
-                    <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm">
-                      <i class="fa fa-check fa-2x"></i> Registrado
+                    <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
+                      <i class="fa fa-check fa-2x"></i>
                     </button>                    
-                    <button type="button" v-else class="btn btn-danger btn-sm">
-                      <i class="fa fa-times fa-2x"></i> Anulado
+                    <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
+                      <i class="fa fa-times fa-2x"></i>
                     </button>
                   </td>
                   <td>
@@ -78,13 +78,13 @@
                     </template>
                     <template v-else>
                         <button type="button" class="btn btn-danger btn-sm">
-                              <i class="fa fa-check fa-2x"></i> Cambiado
+                          <i class="fa fa-check fa-2x"></i> Cambiado
                         </button>
                     </template>
                   </td>
                   <td>                 
                     <button type="button" @click="pdfVenta(venta.id)" class="btn btn-info btn-sm">
-                      <i class="fa fa-file fa-2x"></i> Descargar PDF
+                      <i class="fa fa-file fa-2x"></i> PDF
                     </button> &nbsp;
                   </td>  
                 </tr>
@@ -107,20 +107,17 @@
         </template>
         <!--fin listado-->
         <!-- Detalle-->
-        <template v-else-if="listado==0">
-          <span>
-            <strong>(*) Campo obligatorio</strong>
-          </span><br/>
-          <h3 class="text-center">LLenar el formulario</h3>
+        <template v-else-if="listado == 0">         
+          <h3 class="text-center">Registro de Venta</h3>
           <div class="card-body">
             <div class="form-group row border">
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="text-uppercase"><strong>Número Venta(*)</strong></label>
                   <input type="text" class="form-control" v-model="num_venta" placeholder="">
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="text-uppercase"><strong>Cliente(*)</strong></label>
                   <v-select
@@ -132,7 +129,7 @@
                   </v-select>
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
                   <select class="form-control" v-model="tipo_identificacion">
@@ -142,7 +139,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
                 <input type="text" class="form-control" v-model="impuesto">
               </div>      
@@ -159,7 +156,7 @@
             <div class="form-group row border">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Producto <span class="text-error" v-show="idproducto==0">(*Ingrese código del producto)</span></label>
+                  <label>Producto <span class="text-error" v-show="idproducto == 0"><small>(*Ingrese código del producto)</small></span></label>
                   <div class="form-inline">
                     <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
                     <button @click="abrirModal()" class="btn btn-primary">
@@ -171,13 +168,13 @@
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label>Precio <span class="text-error" v-show="precio==0">(*Ingrese un valor)</span></label>
+                  <label>Precio <span class="text-error" v-show="precio == 0"><small>(*Ingrese valor)</small></span></label>
                   <input type="number" value="0" step="any" class="form-control" v-model="precio">
                 </div>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label>Cantidad <span class="text-error" v-show="cantidad==0">(*Ingrese un valor)</span></label>
+                  <label>Cantidad <span class="text-error" v-show="cantidad == 0"><small>(*Ingrese valor)</small></span></label>
                   <input type="number" value="0" class="form-control" v-model="cantidad">
                 </div>
               </div>
@@ -254,7 +251,10 @@
               <div class="col-md-12">
                 <button type="button" class="btn btn-danger" @click="ocultarDetalle()"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                 <button type="button" class="btn btn-success" @click="registrarVenta()"><i class="fa fa-save fa-2x"></i> Registrar Venta</button>
-              </div>
+                <span>
+                  <strong>(*) Campo obligatorio</strong>
+                </span><br/>
+              </div>              
             </div>
           </div>
         </template>
@@ -367,13 +367,13 @@
               </div>
             </div>
             <div class="table-responsive">
-              <table class="table table-bordered table-striped table-sm">
+              <table class="table table-bordered table-striped table-sm text-center">
                 <thead>
                   <tr class="bg-primary">                    
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
-                    <th>Precio Venta</th>
+                    <th>Precio venta</th>
                     <th>Stock</th>
                     <th>Imagen</th>
                     <th>Estado</th>
@@ -385,17 +385,17 @@
                     <td v-text="producto.nombre_categoria"></td>
                     <td v-text="producto.nombre"></td>
                     <td v-text="producto.codigo"></td>
-                    <td v-text="producto.precio_venta"></td>
+                    <td v-text="'$ '+producto.precio_venta"></td>
                     <td v-text="producto.stock"></td>
                     <td>
-                      <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="100px" height="100px">
+                      <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                     </td>
                     <td>
-                      <button type="button" class="btn btn-success btn-sm" v-if="producto.condicion">
-                        <i class="fa fa-unlock"></i>&nbsp;Activo
+                      <button type="button" class="btn btn-success btn-sm" title="ACTIVO" v-if="producto.condicion">
+                        <i class="fa fa-unlock fa-2x"></i>&nbsp;
                       </button>
-                      <button type="button" class="btn btn-danger btn-sm" v-else>
-                        <i class="fa fa-lock"></i>&nbsp;Desactivado
+                      <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
+                        <i class="fa fa-lock fa-2x"></i>&nbsp;
                       </button>
                     </td>
                     <td>

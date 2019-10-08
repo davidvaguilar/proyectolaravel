@@ -20,8 +20,8 @@ class CreateDetalleVentasTable extends Migration
             $table->integer('idproducto')->unsigned();
             $table->foreign('idproducto')->references('id')->on('productos');
             $table->integer('cantidad');
-            $table->decimal('precio', 11, 2);
-            $table->decimal('descuento', 11, 2);
+            $table->integer('precio')->unsigned();   // $table->decimal('precio', 11, 2);
+            $table->integer('descuento')->unsigned();   // $table->decimal('descuento', 11, 2);
         });
     }
 

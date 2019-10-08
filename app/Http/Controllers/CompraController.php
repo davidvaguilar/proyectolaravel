@@ -68,7 +68,7 @@ class CompraController extends Controller
         return ['detalles' => $detalles];
     }
 
-    public function pdf(Request $request,$id){      
+    public function pdf(Request $request, $id){      
         $compra = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
             ->join('users','compras.idusuario','=','users.id')
             ->select('compras.id','compras.tipo_identificacion',
@@ -84,8 +84,7 @@ class CompraController extends Controller
             ->where('detalle_compras.idcompra','=',$id)
             ->orderBy('detalle_compras.id', 'desc')->get();
 
-        $numcompra=Compra::select('num_compra')->where('id',$id)->get();
-        
+        $numcompra = Compra::select('num_compra')->where('id',$id)->get();        
         $pdf= \PDF::loadView('pdf.compra',['compra'=>$compra,'detalles'=>$detalles]);
         return $pdf->download('compra-'.$numcompra[0]->num_compra.'.pdf');
     }
@@ -102,7 +101,7 @@ class CompraController extends Controller
             $compra->idusuario = \Auth::user()->id;
             $compra->tipo_identificacion = $request->tipo_identificacion;
             $compra->num_compra = $request->num_compra;
-            $compra->fecha_compra = $mytime->toDateString();
+            $compra->fecha_compra = $mytime->toDateTimeString();
             $compra->impuesto = $request->impuesto;
             $compra->total = $request->total;
             $compra->estado = 'Registrado';

@@ -23,7 +23,7 @@ class CreateVentasTable extends Migration
             $table->string('num_venta', 10);
             $table->dateTime('fecha_venta');
             $table->decimal('impuesto', 4, 2);
-            $table->decimal('total', 11, 2);
+            $table->integer('total')->unsigned();   //$table->decimal('total', 11, 2);
             $table->string('estado', 20);
             $table->timestamps();
         });

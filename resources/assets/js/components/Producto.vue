@@ -29,42 +29,41 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm text-center">
             <thead>
               <tr class="bg-primary">
                 <th>Categoría</th>
                 <th>Producto</th>
                 <th>Codigo</th>
-                <th>Precio Venta (USD$)</th>
+                <th>Precio Venta</th>
                 <th>Stock</th>
                 <th>Imagen</th>
                 <th>Estado</th>
                 <th>Editar</th>
-                <th>Cambiar Estado</th>
+                <th>Cambiar estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="producto in arrayProducto" :key="producto.id">
-        
+              <tr v-for="producto in arrayProducto" :key="producto.id">        
                 <td v-text="producto.nombre_categoria"></td>
                 <td v-text="producto.nombre"></td>
                 <td v-text="producto.codigo"></td>
-                <td v-text="producto.precio_venta"></td>
+                <td v-text="'$ '+producto.precio_venta"></td>
                 <td v-text="producto.stock"></td>
                 <td>
-                  <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="100px" height="100px">
+                  <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                 </td>
                 <td>
-                  <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">
-                    <i class="fa fa-check fa-2x"></i> Activo
+                  <button type="button" class="btn btn-success btn-md" title="ACTIVO" v-if="producto.condicion">
+                    <i class="fa fa-check fa-2x"></i>
                   </button>
-                  <button type="button" class="btn btn-danger btn-sm" v-else>
-                    <i class="fa fa-times fa-2x"></i> Desactivado
+                  <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
+                    <i class="fa fa-times fa-2x"></i>
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'producto', 'actualizar', producto)">
-                    <i class="fa fa-edit fa-2x"></i> Editar
+                  <button type="button" class="btn btn-info btn-md" title="EDITAR" @click="abrirModal( 'producto', 'actualizar', producto)">
+                    <i class="fa fa-edit fa-2x"></i>
                   </button> &nbsp;
                 </td>
                 <td>         
@@ -308,14 +307,18 @@
       },
       subirImagen(e){              
         let me = this;
-        let file = e.target.files[0];      
-        //console.log(file);
-        let reader = new FileReader();
-        reader.onloadend = (file) => {            
-            //console.log('RESULT', reader.result)
-          me.imagen = reader.result;
+        if( e.target.files.length == 1 ){
+          let file = e.target.files[0];      
+            //console.log(file);
+          let reader = new FileReader();
+          reader.onloadend = (file) => {            
+              //console.log('RESULT', reader.result)
+            me.imagen = reader.result;
+          }
+          reader.readAsDataURL(file);
+        } else {
+          me.imagen = "";
         }
-        reader.readAsDataURL(file);
       },
       actualizarProducto(){
         if( this.validarProducto() ){

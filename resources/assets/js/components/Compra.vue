@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-sm">
+            <table class="table table-bordered table-striped table-sm text-center">
               <thead>
                 <tr class="bg-primary">                      
                   <th>Ver Detalle</th>
@@ -43,15 +43,14 @@
                   <th>Impuesto</th>
                   <th>Estado</th>
                   <th>Cambiar estado</th>
-                  <th>Descargar Reporte</th>
+                  <th>Descargar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="compra in arrayCompra" :key="compra.id">
                   <td>
-                    <!--compra.id-->
-                    <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm">
-                      <i class="fa fa-eye fa-2x"></i> Ver detalle
+                    <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm" title="DETALLE">
+                      <i class="fa fa-eye fa-2x"></i>
                     </button> &nbsp;
                   </td>
                   <td v-text="compra.fecha_compra"></td>
@@ -59,14 +58,14 @@
                   <td v-text="compra.nombre"></td>
                   <td v-text="compra.tipo_identificacion"></td> 
                   <td v-text="compra.usuario"></td> 
-                  <td v-text="compra.total"></td>
+                  <td v-text="'$ '+compra.total"></td>
                   <td v-text="compra.impuesto * 100 + ' %'"></td>
                   <td>
-                    <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
-                      <i class="fa fa-check fa-2x"></i> Registrado
+                    <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
+                      <i class="fa fa-check fa-2x"></i>
                     </button>                
-                    <button type="button" v-else class="btn btn-danger btn-sm">
-                      <i class="fa fa-times fa-2x"></i> Anulado
+                    <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
+                      <i class="fa fa-times fa-2x"></i>
                     </button>
                   </td>
                   <td>
@@ -83,7 +82,7 @@
                   </td>
                   <td>                              
                     <button type="button" @click="pdfCompra(compra.id)" class="btn btn-info btn-sm">
-                      <i class="fa fa-file fa-2x"></i>Descargar PDF
+                      <i class="fa fa-file fa-2x"></i> PDF
                     </button> &nbsp;
                   </td>                     
                 </tr>
@@ -106,153 +105,155 @@
         </template>
         <!--fin listado-->
         <!-- Detalle-->
-        <template v-else-if="listado==0">
-          <span><strong>(*) Campo obligatorio</strong></span><br/>
-            <h3 class="text-center">LLenar el formulario</h3>
+        <template v-else-if="listado == 0">
+          
+          <h3 class="text-center">Registro de Compra</h3>
                           
-            <div class="card-body">
-              <div class="form-group row border">
-
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Número Compra(*)</strong></label>
-                    <input type="text" class="form-control" v-model="num_compra" placeholder="">
-                  </div>
+          <div class="card-body">
+            <div class="form-group row border">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Número Compra(*)</strong></label>
+                  <input type="text" class="form-control" v-model="num_compra" placeholder="">
                 </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Proveedor(*)</strong></label>
-                    <v-select
-                        @search="selectProveedor"
-                        label="nombre"
-                        :options="arrayProveedor"
-                        placeholder="Buscar Proveedores..."
-                        @input="getDatosProveedor" >
-                    </v-select>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
-                    <select class="form-control" v-model="tipo_identificacion">
-                      <option value="0">Seleccione</option>
-                      <option value="FACTURA">Factura</option>
-                      <option value="TICKET">Ticket</option>                  
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                    <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
-                    <input type="text" class="form-control" v-model="impuesto">
-                </div>                          
               </div>
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <div v-show="errorCompra" class="form-group row div-error">
-                    <div class="text-center text-error">
-                      <div v-for="error in errorMostrarMsjCompra" :key="error" v-text="error">
-                      </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Proveedor(*)</strong></label>
+                  <v-select
+                      @search="selectProveedor"
+                      label="nombre"
+                      :options="arrayProveedor"
+                      placeholder="Buscar Proveedores..."
+                      @input="getDatosProveedor" >
+                  </v-select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
+                  <select class="form-control" v-model="tipo_identificacion">
+                    <option value="0">Seleccione</option>
+                    <option value="FACTURA">Factura</option>
+                    <option value="TICKET">Ticket</option>                  
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
+                  <input type="text" class="form-control" v-model="impuesto">
+              </div>                          
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <div v-show="errorCompra" class="form-group row div-error">
+                  <div class="text-center text-error">
+                    <div v-for="error in errorMostrarMsjCompra" :key="error" v-text="error">
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="form-group row border">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Producto <span class="text-error" v-show="idproducto==0">(*Ingrese código del producto)</span></label>
-                    <div class="form-inline">
-                      <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
-                      <button @click="abrirModal()" class="btn btn-primary">
-                        <i class="fa fa-plus"></i>&nbsp;Agregar Productos
-                      </button>
-                      <input type="text" readonly class="form-control" v-model="producto">
-                    </div>                                    
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>Precio <span class="text-error" v-show="precio==0">(*Ingrese un valor)</span></label>
-                    <input type="number" value="0" step="any" class="form-control" v-model="precio">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>Cantidad <span class="text-error" v-show="cantidad==0">(*Ingrese un valor)</span></label>
-                    <input type="number" value="0" class="form-control" v-model="cantidad">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <button @click="agregarDetalle()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Agregar detalle</button>
-                  </div>
+            <div class="form-group row border">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Producto <span class="text-error" v-show="idproducto == 0"><small>(*Ingrese código del producto)</small></span></label>
+                  <div class="form-inline">
+                    <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
+                    <button @click="abrirModal()" class="btn btn-primary">
+                      <i class="fa fa-plus"></i>&nbsp;Agregar Productos
+                    </button>
+                    <input type="text" readonly class="form-control" v-model="producto">
+                  </div>                                    
                 </div>
               </div>
-
-              <br/><br/>
-              <div class="form-group row border">
-                <h3>Lista de Compras a Proveedores</h3>
-                <div class="table-responsive col-md-12">
-                <table class="table table-bordered table-striped table-sm">
-                  <thead>
-                    <tr class="bg-success">
-                      <th>Eliminar</th>
-                      <th>Producto</th>
-                      <th>Precio</th>
-                      <th>Cantidad</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody v-if="arrayDetalle.length">
-                    <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
-                      <td>
-                        <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
-                          <i class="fa fa-times fa-2x"></i>
-                        </button>
-                      </td>
-                      <td v-text="detalle.producto"></td>
-                      <td>
-                        <input v-model="detalle.precio" type="number" value="3" class="form-control">
-                      </td>
-                      <td>
-                        <input v-model="detalle.cantidad" type="number" value="2" class="form-control">
-                      </td>
-                      <td>
-                        {{ detalle.precio * detalle.cantidad }}
-                      </td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>$ {{ subTotalImpuesto = ( (total*impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Total:</strong></td>
-                      <td><strong>$ {{ total = calcularTotal }}</strong></td>
-                    </tr>
-                  </tbody>
-                  <tbody v-else>
-                    <tr>
-                      <td colspan="5"> No se han agregado productos </td>
-                    </tr>
-                  </tbody>                                    
-                </table>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Precio <span class="text-error" v-show="precio == 0"><small>(*Ingrese un valor)</small></span></label>
+                  <input type="number" value="0" step="any" class="form-control" v-model="precio">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Cantidad <span class="text-error" v-show="cantidad == 0"><small>(*Ingrese un valor)</small></span></label>
+                  <input type="number" value="0" class="form-control" v-model="cantidad">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <button @click="agregarDetalle()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Agregar detalle</button>
+                </div>
               </div>
             </div>
+
+            <br/><br/>
+            <div class="form-group row border">
+              <h3>Lista de Compras a Proveedores</h3>
+              <div class="table-responsive col-md-12">
+              <table class="table table-bordered table-striped table-sm">
+                <thead>
+                  <tr class="bg-success">
+                    <th>Eliminar</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody v-if="arrayDetalle.length">
+                  <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
+                    <td>
+                      <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
+                        <i class="fa fa-times fa-2x"></i>
+                      </button>
+                    </td>
+                    <td v-text="detalle.producto"></td>
+                    <td>
+                      <input v-model="detalle.precio" type="number" value="3" class="form-control">
+                    </td>
+                    <td>
+                      <input v-model="detalle.cantidad" type="number" value="2" class="form-control">
+                    </td>
+                    <td>
+                      {{ detalle.precio * detalle.cantidad }}
+                    </td>
+                  </tr>
+                  <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
+                    <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
+                  </tr>
+                  <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Impuesto:</strong></td>
+                    <td><strong>$ {{ subTotalImpuesto = ( (total*impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
+                  </tr>
+                  <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Total:</strong></td>
+                    <td><strong>$ {{ total = calcularTotal }}</strong></td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="5"> No se han agregado productos </td>
+                  </tr>
+                </tbody>                                    
+              </table>
+            </div>
+          </div>
 
             <div class="form-group row">
               <div class="col-md-12">
                 <button type="button" class="btn btn-danger" @click="ocultarDetalle()"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                 <button type="button" class="btn btn-success" @click="registrarCompra()"><i class="fa fa-save fa-2x"></i> Registrar Compra</button>
+                <span>
+                  <strong>(*) Campo obligatorio</strong>
+                </span><br/>
               </div>
             </div>
           </div>
         </template>
         <!-- Fin Detalle--> 
-        <template v-else-if="listado==2">
+        <template v-else-if="listado == 2">
           <h2 class="text-center">Detalle de Compra</h2><br/>
   
           <div class="card-body">
@@ -315,9 +316,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="4">
-                        No se han agregado productos
-                      </td>
+                      <td colspan="4"> No se han agregado productos </td>
                     </tr>
                   </tbody>                                    
                 </table>
@@ -360,13 +359,13 @@
             </div>
                             
             <div class="table-responsive">
-              <table class="table table-bordered table-striped table-sm">
+              <table class="table table-bordered table-striped table-sm text-center">
                 <thead>
                   <tr class="bg-primary">              
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
-                    <th>Precio Venta</th>
+                    <th>Precio venta</th>
                     <th>Stock</th>
                     <th>Imagen</th>
                     <th>Estado</th>
@@ -378,17 +377,17 @@
                     <td v-text="producto.nombre_categoria"></td>
                     <td v-text="producto.nombre"></td>
                     <td v-text="producto.codigo"></td>
-                    <td v-text="producto.precio_venta"></td>
+                    <td v-text="'$ '+producto.precio_venta"></td>
                     <td v-text="producto.stock"></td>
                     <td>
-                      <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="100px" height="100px">
+                      <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                     </td>
                     <td>
-                      <button type="button" class="btn btn-success btn-sm" v-if="producto.condicion">
-                        <i class="fa fa-unlock"></i>&nbsp;Activo
+                      <button type="button" class="btn btn-success btn-sm" title="ACTIVO" v-if="producto.condicion">
+                        <i class="fa fa-unlock fa-2x"></i>&nbsp;
                       </button>
-                      <button type="button" class="btn btn-danger btn-sm" v-else>
-                        <i class="fa fa-lock"></i>&nbsp;Desactivado
+                      <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
+                        <i class="fa fa-lock fa-2x"></i>&nbsp;
                       </button>   
                     </td>
                     <td>
