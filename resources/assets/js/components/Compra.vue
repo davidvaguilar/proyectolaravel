@@ -10,84 +10,92 @@
 
         <template v-if="listado==1">
           <div class="card-header">
-            <h2>Listado de Compras</h2><br/>
-            <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-              <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
-            </button>
+            <div class="row align-items-center">
+              <div class="col">
+                <h2>Listado de Compras</h2>
+              </div>
+              <div class="col text-right">
+                <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
+                  <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
+                </button>
+              </div>
+            </div>
           </div>
           <!--listado-->
           <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="input-group">
-                        <select class="form-control col-md-3" v-model="criterio">
+                        <select class="form-control col-md-5" v-model="criterio">
                           <option value="tipo_identificacion">Tipo identificación</option>
                           <option value="num_compra">Número Compra</option>
                           <option value="fecha_compra">Fecha Compra</option>
                         </select>
-                        <input type="text"  @keyup.enter="listarCompra(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
-                        <button type="submit"  @click="listarCompra(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                        <input type="text" @keyup.enter="listarCompra(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
+                        <button type="submit" @click="listarCompra(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-sm text-center">
-              <thead>
-                <tr class="bg-primary">                      
-                  <th>Ver Detalle</th>
-                  <th>Fecha Compra</th>
-                  <th>Número Compra</th>
-                  <th>Proveedor</th>
-                  <th>Tipo de identificación</th>
-                  <th>Comprador</th>  
-                  <th>Total</th>
-                  <th>Impuesto</th>
-                  <th>Estado</th>
-                  <th>Cambiar estado</th>
-                  <th>Descargar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="compra in arrayCompra" :key="compra.id">
-                  <td>
-                    <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm" title="DETALLE">
-                      <i class="fa fa-eye fa-2x"></i>
-                    </button> &nbsp;
-                  </td>
-                  <td v-text="compra.fecha_compra"></td>
-                  <td v-text="compra.num_compra"></td>
-                  <td v-text="compra.nombre"></td>
-                  <td v-text="compra.tipo_identificacion"></td> 
-                  <td v-text="compra.usuario"></td> 
-                  <td v-text="'$ '+compra.total"></td>
-                  <td v-text="compra.impuesto * 100 + ' %'"></td>
-                  <td>
-                    <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
-                      <i class="fa fa-check fa-2x"></i>
-                    </button>                
-                    <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
-                      <i class="fa fa-times fa-2x"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <template v-if="compra.estado=='Registrado'">
-                      <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
-                        <i class="fa fa-times fa-2x"></i> Anular Compra
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-sm text-center">
+                <thead>
+                  <tr class="bg-primary">                      
+                    <th>Ver Detalle</th>
+                    <th>Fecha Compra</th>
+                    <th>Número Compra</th>
+                    <th>Proveedor</th>
+                    <th>Tipo de identificación</th>
+                    <th>Comprador</th>  
+                    <th>Valor Total</th>
+                    <th>Impuesto</th>
+                    <th>Estado</th>
+                    <th>Cambiar estado</th>
+                    <th>Descargar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="compra in arrayCompra" :key="compra.id">
+                    <td>
+                      <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm" title="DETALLE">
+                        <i class="fa fa-eye fa-2x"></i>
+                      </button> &nbsp;
+                    </td>
+                    <td v-text="compra.fecha_compra"></td>
+                    <td v-text="compra.num_compra"></td>
+                    <td v-text="compra.nombre"></td>
+                    <td v-text="compra.tipo_identificacion"></td> 
+                    <td v-text="compra.usuario"></td> 
+                    <td v-text="'$ '+compra.total"></td>
+                    <td v-text="compra.impuesto * 100 + ' %'"></td>
+                    <td>
+                      <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
+                        <i class="fa fa-check fa-2x"></i>
+                      </button>                
+                      <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
+                        <i class="fa fa-times fa-2x"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                      <button type="button" class="btn btn-danger btn-sm">
-                        <i class="fa fa-check fa-2x"></i> Cambiado
-                      </button>
-                    </template>
-                  </td>
-                  <td>                              
-                    <button type="button" @click="pdfCompra(compra.id)" class="btn btn-info btn-sm">
-                      <i class="fa fa-file fa-2x"></i> PDF
-                    </button> &nbsp;
-                  </td>                     
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                    <td>
+                      <template v-if="compra.estado=='Registrado'">
+                        <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
+                          <i class="fa fa-times fa-2x"></i> Anular Compra
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button type="button" class="btn btn-danger btn-sm">
+                          <i class="fa fa-check fa-2x"></i> Cambiado
+                        </button>
+                      </template>
+                    </td>
+                    <td>                              
+                      <button type="button" @click="pdfCompra(compra.id)" class="btn btn-info btn-sm">
+                        <i class="fa fa-file fa-2x"></i> PDF
+                      </button> &nbsp;
+                    </td>                     
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <nav>
               <ul class="pagination">
                 <li class="page-item" v-if="pagination.current_page > 1">

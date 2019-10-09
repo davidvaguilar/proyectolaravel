@@ -8,7 +8,7 @@
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
-          <h2>Listado de Roles</h2><br/>          
+          <h2>Listado de Roles</h2>          
         </div>
         <div class="card-body">
           <div class="form-group row">

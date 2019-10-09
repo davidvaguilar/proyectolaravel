@@ -8,10 +8,16 @@
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
-          <h2>Listado de Usuarios</h2><br/>
-          <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'usuario', 'registrar' )">
-            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Usuario
-          </button>
+          <div class="row align-items-center">
+            <div class="col">
+              <h2>Listado de Usuarios</h2>
+            </div>
+            <div class="col text-right">
+              <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'usuario', 'registrar' )">
+                <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Usuario
+              </button>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-group row">
@@ -28,53 +34,55 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm text-center">
-            <thead>
-              <tr class="bg-primary">
-                <th>Nombre</th>
-                <th>Tipo de Documento</th>
-                <th>Numero</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Usuario</th>
-                <th>Rol</th>
-                <th>Imagen</th>
-                <th>Editar</th>
-                <th>Cambiar estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="usuario in arrayUsuario" :key="usuario.id">        
-                <td v-text="usuario.nombre"></td>
-                <td v-text="usuario.tipo_documento"></td>
-                <td v-text="usuario.num_documento"></td>
-                <td v-text="usuario.telefono"></td>
-                <td v-text="usuario.email"></td>
-                <td v-text="usuario.usuario"></td>          
-                <td v-text="usuario.rol"></td>         
-                <td>
-                  <img :src="'img/usuario/'+usuario.imagen" class="img-responsive" width="50px" height="50px">
-                </td>
-                <td>
-                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'usuario', 'actualizar', usuario)" title="EDITAR">
-                    <i class="fa fa-edit fa-2x"></i>
-                  </button> &nbsp;
-                </td> 
-                <td>         
-                  <template v-if="usuario.condicion">              
-                    <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(usuario.id)">
-                      <i class="fa fa-lock fa-2x"></i> Desactivar
-                    </button>
-                  </template>
-                  <template v-else>              
-                    <button type="button" class="btn btn-success btn-sm" @click="activarUsuario(usuario.id)">
-                      <i class="fa fa-check fa-2x"></i> Activar
-                    </button>
-                  </template>
-                </td>               
-              </tr>                  
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-sm text-center">
+              <thead>
+                <tr class="bg-primary">
+                  <th>Nombre</th>
+                  <th>Tipo de Documento</th>
+                  <th>Numero</th>
+                  <th>Teléfono</th>
+                  <th>Email</th>
+                  <th>Usuario</th>
+                  <th>Rol</th>
+                  <th>Imagen</th>
+                  <th>Editar</th>
+                  <th>Cambiar estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="usuario in arrayUsuario" :key="usuario.id">        
+                  <td v-text="usuario.nombre"></td>
+                  <td v-text="usuario.tipo_documento"></td>
+                  <td v-text="usuario.num_documento"></td>
+                  <td v-text="usuario.telefono"></td>
+                  <td v-text="usuario.email"></td>
+                  <td v-text="usuario.usuario"></td>          
+                  <td v-text="usuario.rol"></td>         
+                  <td>
+                    <img :src="'img/usuario/'+usuario.imagen" class="img-responsive" width="50px" height="50px">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'usuario', 'actualizar', usuario)" title="EDITAR">
+                      <i class="fa fa-edit fa-2x"></i>
+                    </button> &nbsp;
+                  </td> 
+                  <td>         
+                    <template v-if="usuario.condicion">              
+                      <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(usuario.id)">
+                        <i class="fa fa-lock fa-2x"></i> Desactivar
+                      </button>
+                    </template>
+                    <template v-else>              
+                      <button type="button" class="btn btn-success btn-sm" @click="activarUsuario(usuario.id)">
+                        <i class="fa fa-check fa-2x"></i> Activar
+                      </button>
+                    </template>
+                  </td>               
+                </tr>                  
+              </tbody>
+            </table>
+          </div>
           <nav>
             <ul class="pagination">
               <li class="page-item" v-if="pagination.current_page > 1">

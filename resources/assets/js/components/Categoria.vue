@@ -8,10 +8,16 @@
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
-          <h2>Listado de Categorías</h2><br/>
-          <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'categoria', 'registrar')">
-            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Categoría
-          </button>
+          <div class="row align-items-center">
+            <div class="col">
+              <h2>Listado de Categorías</h2>
+            </div>
+            <div class="col text-right">
+              <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'categoria', 'registrar')">
+                <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Categoría
+              </button>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-group row">

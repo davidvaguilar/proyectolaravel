@@ -7,11 +7,17 @@
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
-        <div class="card-header">
-          <h2>Listado de Clientes</h2><br/>
-          <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'cliente', 'registrar')">
-            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Cliente
-          </button>
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2>Listado de Clientes</h2>
+            </div>
+            <div class="col text-right">
+              <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'cliente', 'registrar')">
+                <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Cliente
+              </button>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-group row">
@@ -28,34 +34,36 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered table-striped table-sm text-center">
-            <thead>
-              <tr class="bg-primary">
-                <th>Cliente</th>
-                <th>Tipo de Documento</th>
-                <th>Numero Documento</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Dirección</th>
-                <th>Editar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="cliente in arrayCliente" :key="cliente.id">        
-                <td v-text="cliente.nombre"></td>
-                <td v-text="cliente.tipo_documento"></td>
-                <td v-text="cliente.num_documento"></td>
-                <td v-text="cliente.telefono"></td>
-                <td v-text="cliente.email"></td>
-                <td v-text="cliente.direccion"></td>               
-                <td>
-                  <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'cliente', 'actualizar', cliente)">
-                    <i class="fa fa-edit fa-2x"></i>
-                  </button> &nbsp;
-                </td>                
-              </tr>                  
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-sm text-center">
+              <thead>
+                <tr class="bg-primary">
+                  <th>Cliente</th>
+                  <th>Tipo de Documento</th>
+                  <th>Numero Documento</th>
+                  <th>Teléfono</th>
+                  <th>Email</th>
+                  <th>Dirección</th>
+                  <th>Editar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="cliente in arrayCliente" :key="cliente.id">        
+                  <td v-text="cliente.nombre"></td>
+                  <td v-text="cliente.tipo_documento"></td>
+                  <td v-text="cliente.num_documento"></td>
+                  <td v-text="cliente.telefono"></td>
+                  <td v-text="cliente.email"></td>
+                  <td v-text="cliente.direccion"></td>               
+                  <td>
+                    <button type="button" class="btn btn-info btn-md" @click="abrirModal( 'cliente', 'actualizar', cliente)">
+                      <i class="fa fa-edit fa-2x"></i>
+                    </button> &nbsp;
+                  </td>                
+                </tr>                  
+              </tbody>
+            </table>
+          </div>
           <nav>
             <ul class="pagination">
               <li class="page-item" v-if="pagination.current_page > 1">

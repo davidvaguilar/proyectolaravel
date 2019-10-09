@@ -11,17 +11,23 @@
       <div class="card">
         <template v-if="listado==1">
           <div class="card-header">
-            <h2>Listado de Ventas</h2><br/>
-            <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-              <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
-            </button>
+            <div class="row align-items-center">
+              <div class="col">
+                <h2>Listado de Ventas</h2>
+              </div>
+              <div class="col text-right">
+                <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
+                  <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
+                </button>
+              </div>
+            </div>
           </div>
           <!--listado-->
           <div class="card-body">
             <div class="form-group row">
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <div class="input-group">
-                  <select class="form-control col-md-3" v-model="criterio">
+                  <select class="form-control col-md-5" v-model="criterio">
                     <option value="tipo_identificacion">Tipo identificación</option>
                     <option value="num_venta">Número Venta</option>
                     <option value="fecha_venta">Fecha Venta</option>
@@ -31,65 +37,67 @@
                 </div>
               </div>
             </div>
-            <table class="table table-bordered table-striped table-sm text-center">
-              <thead>
-                <tr class="bg-primary">
-                  <th>Ver Detalle</th>
-                  <th>Fecha Venta</th>
-                  <th>Número Venta</th>
-                  <th>Cliente</th>
-                  <th>Tipo de identificación</th>
-                  <th>Vendedor</th>  
-                  <th>Total</th>
-                  <th>Impuesto</th>
-                  <th>Estado</th>
-                  <th>Cambiar estado</th>
-                  <th>Descargar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="venta in arrayVenta" :key="venta.id">
-                  <td>
-                    <!--compra.id-->
-                    <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm" title="DETALLE">
-                      <i class="fa fa-eye fa-2x"></i>
-                    </button> &nbsp;
-                  </td>
-                  <td v-text="venta.fecha_venta"></td>
-                  <td v-text="venta.num_venta"></td>
-                  <td v-text="venta.nombre"></td>
-                  <td v-text="venta.tipo_identificacion"></td> 
-                  <td v-text="venta.usuario"></td> 
-                  <td v-text="'$ '+venta.total"></td>
-                  <td v-text="venta.impuesto * 100 + ' %'"></td>
-                  <td>
-                    <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
-                      <i class="fa fa-check fa-2x"></i>
-                    </button>                    
-                    <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
-                      <i class="fa fa-times fa-2x"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <template v-if="venta.estado=='Registrado'">
-                      <button type="button" class="btn btn-danger btn-sm" @click="desactivarVenta(venta.id)">
-                        <i class="fa fa-times fa-2x"></i> Anular Venta
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-sm text-center">
+                <thead>
+                  <tr class="bg-primary">
+                    <th>Ver Detalle</th>
+                    <th>Fecha Venta</th>
+                    <th>Número Venta</th>
+                    <th>Cliente</th>
+                    <th>Tipo de identificación</th>
+                    <th>Vendedor</th>  
+                    <th>Total</th>
+                    <th>Impuesto</th>
+                    <th>Estado</th>
+                    <th>Cambiar estado</th>
+                    <th>Descargar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="venta in arrayVenta" :key="venta.id">
+                    <td>
+                      <!--compra.id-->
+                      <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm" title="DETALLE">
+                        <i class="fa fa-eye fa-2x"></i>
+                      </button> &nbsp;
+                    </td>
+                    <td v-text="venta.fecha_venta"></td>
+                    <td v-text="venta.num_venta"></td>
+                    <td v-text="venta.nombre"></td>
+                    <td v-text="venta.tipo_identificacion"></td> 
+                    <td v-text="venta.usuario"></td> 
+                    <td v-text="'$ '+venta.total"></td>
+                    <td v-text="venta.impuesto * 100 + ' %'"></td>
+                    <td>
+                      <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
+                        <i class="fa fa-check fa-2x"></i>
+                      </button>                    
+                      <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
+                        <i class="fa fa-times fa-2x"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                        <button type="button" class="btn btn-danger btn-sm">
-                          <i class="fa fa-check fa-2x"></i> Cambiado
+                    </td>
+                    <td>
+                      <template v-if="venta.estado=='Registrado'">
+                        <button type="button" class="btn btn-danger btn-sm" @click="desactivarVenta(venta.id)">
+                          <i class="fa fa-times fa-2x"></i> Anular Venta
                         </button>
-                    </template>
-                  </td>
-                  <td>                 
-                    <button type="button" @click="pdfVenta(venta.id)" class="btn btn-info btn-sm">
-                      <i class="fa fa-file fa-2x"></i> PDF
-                    </button> &nbsp;
-                  </td>  
-                </tr>
-              </tbody>
-            </table>
+                      </template>
+                      <template v-else>
+                          <button type="button" class="btn btn-danger btn-sm">
+                            <i class="fa fa-check fa-2x"></i> Cambiado
+                          </button>
+                      </template>
+                    </td>
+                    <td>                 
+                      <button type="button" @click="pdfVenta(venta.id)" class="btn btn-info btn-sm">
+                        <i class="fa fa-file fa-2x"></i> PDF
+                      </button> &nbsp;
+                    </td>  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <nav>
               <ul class="pagination">
                 <li class="page-item" v-if="pagination.current_page > 1">
@@ -355,9 +363,9 @@
           <div class="modal-body">
 
             <div class="form-group row">
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <div class="input-group">
-                  <select class="form-control col-md-3" v-model="criterioP">
+                  <select class="form-control col-md-5" v-model="criterioP">
                     <option value="nombre">Producto</option>
                     <option value="codigo">Código</option>
                   </select>

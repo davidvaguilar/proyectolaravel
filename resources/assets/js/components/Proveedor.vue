@@ -7,11 +7,17 @@
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
-        <div class="card-header">
-          <h2>Listado de Proveedores</h2><br/>
-          <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'proveedor', 'registrar')">
-            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Proveedor
-          </button>
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2>Listado de Proveedores</h2><br/>
+            </div>
+            <div class="col text-right">
+              <button class="btn btn-primary btn-lg" type="button" @click="abrirModal( 'proveedor', 'registrar')">
+                <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Proveedor
+              </button>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-group row">
