@@ -1,11 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active">
-        <a href="/">SISTEMA DE COMPRA Y VENTA - VENTAS</a>
-      </li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -69,13 +67,9 @@
                     <td v-text="venta.usuario"></td> 
                     <td v-text="'$ '+venta.total"></td>
                     <td v-text="venta.impuesto * 100 + ' %'"></td>
-                    <td>
-                      <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
-                        <i class="fa fa-check fa-2x"></i>
-                      </button>                    
-                      <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
-                        <i class="fa fa-times fa-2x"></i>
-                      </button>
+                    <td>                      
+                      <i class="fa fa-check fa-2x" title="REGISTRADO" v-if="venta.estado=='Registrado'"></i>
+                      <i class="fa fa-times fa-2x" title="ANULADO" v-else ></i>                   
                     </td>
                     <td>
                       <template v-if="venta.estado=='Registrado'">
@@ -398,13 +392,9 @@
                     <td>
                       <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                     </td>
-                    <td>
-                      <button type="button" class="btn btn-success btn-sm" title="ACTIVO" v-if="producto.condicion">
-                        <i class="fa fa-unlock fa-2x"></i>&nbsp;
-                      </button>
-                      <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
-                        <i class="fa fa-lock fa-2x"></i>&nbsp;
-                      </button>
+                    <td>                     
+                      <i class="fa fa-unlock fa-2x" v-if="producto.condicion"></i>                    
+                      <i class="fa fa-lock fa-2x" v-else></i>                 
                     </td>
                     <td>
                       <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-primary btn-sm">

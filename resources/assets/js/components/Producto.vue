@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - PRODUCTOS</a></li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -24,10 +24,11 @@
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="input-group">
-                <select class="form-control col-md-3" v-model="criterio">
-                  <option value="nombre">Producto</option>
+                <select class="form-control col-md-5" v-model="criterio">
+                  <option value="nombre">Nombre de Producto</option>
+                  <option value="codigo">Codigo de Barra</option>
                 </select>
                 <input type="text" @keyup.enter="listarProducto(1, buscar, criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
                 <button type="submit" @click="listarProducto(1, buscar, criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -60,12 +61,8 @@
                     <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                   </td>
                   <td>
-                    <button type="button" class="btn btn-success btn-md" title="ACTIVO" v-if="producto.condicion">
-                      <i class="fa fa-check fa-2x"></i>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
-                      <i class="fa fa-times fa-2x"></i>
-                    </button>
+                    <i class="fa fa-check fa-2x" v-if="producto.condicion"></i>
+                    <i class="fa fa-times fa-2x" v-else></i>
                   </td>
                   <td>
                     <button type="button" class="btn btn-info btn-md" title="EDITAR" @click="abrirModal( 'producto', 'actualizar', producto)">

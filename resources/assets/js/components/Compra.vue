@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - COMPRAS</a></li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -67,13 +67,9 @@
                     <td v-text="compra.usuario"></td> 
                     <td v-text="'$ '+compra.total"></td>
                     <td v-text="compra.impuesto * 100 + ' %'"></td>
-                    <td>
-                      <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm" title="REGISTRADO">
-                        <i class="fa fa-check fa-2x"></i>
-                      </button>                
-                      <button type="button" v-else class="btn btn-danger btn-sm" title="ANULADO">
-                        <i class="fa fa-times fa-2x"></i>
-                      </button>
+                    <td>                      
+                      <i class="fa fa-check fa-2x" v-if="compra.estado=='Registrado'"></i>                    
+                      <i class="fa fa-times fa-2x" v-else></i>               
                     </td>
                     <td>
                       <template v-if="compra.estado=='Registrado'">
@@ -354,9 +350,9 @@
           </div>                       
           <div class="modal-body">
             <div class="form-group row">
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <div class="input-group">
-                  <select class="form-control col-md-3" v-model="criterioP">
+                  <select class="form-control col-md-5" v-model="criterioP">
                     <option value="nombre">Producto</option>
                     <option value="codigo">Código</option>
                   </select>
@@ -390,13 +386,9 @@
                     <td>
                       <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                     </td>
-                    <td>
-                      <button type="button" class="btn btn-success btn-sm" title="ACTIVO" v-if="producto.condicion">
-                        <i class="fa fa-unlock fa-2x"></i>&nbsp;
-                      </button>
-                      <button type="button" class="btn btn-danger btn-sm" title="DESACTIVADO" v-else>
-                        <i class="fa fa-lock fa-2x"></i>&nbsp;
-                      </button>   
+                    <td>                      
+                      <i class="fa fa-unlock fa-2x" v-if="producto.condicion"></i>                      
+                      <i class="fa fa-lock fa-2x" v-else></i>                         
                     </td>
                     <td>
                       <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-primary btn-sm">

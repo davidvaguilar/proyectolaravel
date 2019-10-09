@@ -1,8 +1,9 @@
 <template>
 <main class="main">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">SISTEMA DE COMPRA Y VENTA</a></li>
-  </ol>
+  <!-- Breadcrumb  class="breadcrumb" -->
+  <ol >
+    <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+  </ol> 
   <div class="container-fluid">
     <div class="card">
       <div class="card-header">

@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - USUARIOS</a></li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -21,9 +21,9 @@
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="input-group">
-                <select class="form-control col-md-3" v-model="criterio">
+                <select class="form-control col-md-5" v-model="criterio">
                   <option value="nombre">Nombre</option>
                   <option value="num_documento">Documento</option>
                   <option value="email">Email</option>

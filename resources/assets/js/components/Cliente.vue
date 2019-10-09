@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">

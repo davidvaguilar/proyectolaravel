@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - ROLES</a></li>
-    </ol>
+    <!-- Breadcrumb  class="breadcrumb" -->
+    <ol >
+      <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
+    </ol> 
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -12,9 +12,9 @@
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="input-group">
-                <select class="form-control col-md-3" v-model="criterio">
+                <select class="form-control col-md-5" v-model="criterio">
                   <option value="nombre">Rol</option>
                   <option value="descripcion">Descripción</option>
                 </select>
@@ -35,13 +35,9 @@
               <tr v-for="rol in arrayRol" :key="rol.id">        
                 <td v-text="rol.nombre"></td>
                 <td v-text="rol.descripcion"></td>
-                <td>
-                  <button type="button" class="btn btn-success btn-md" v-if="rol.condicion">
-                    <i class="fa fa-check fa-2x"></i> 
-                  </button>
-                  <button type="button" class="btn btn-danger btn-sm" v-else>
-                    <i class="fa fa-times fa-2x"></i>
-                  </button>
+                <td>                  
+                  <i class="fa fa-check fa-2x" v-if="rol.condicion"></i>               
+                  <i class="fa fa-times fa-2x" v-else></i>                  
                 </td>                
               </tr>                  
             </tbody>
