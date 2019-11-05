@@ -22,6 +22,7 @@ Vue.component('proveedor', require('./components/Proveedor.vue'));
 Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
+Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 Vue.component('compra', require('./components/Compra.vue'));
 Vue.component('venta', require('./components/Venta.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));

@@ -1,21 +1,20 @@
 <template>
-  <main class="main">
-    <!-- Breadcrumb  class="breadcrumb" -->
+  <main class="main">   <!-- Breadcrumb  class="breadcrumb" -->
     <ol >
       <!-- <li class="breadcrumb-item active"><a href="/">SISTEMA DE COMPRA Y VENTA - CLIENTES</a></li> -->
     </ol> 
     <div class="container-fluid">
-      <!-- Ejemplo de tabla Listado -->
       <div class="card">
+
         <template v-if="listado==1">
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col">
-                <h2>Listado de Ventas</h2>
+                <h2>Listado de Cotizaciones</h2>
               </div>
               <div class="col text-right">
                 <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-                  <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
+                  <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Cotizacion
                 </button>
               </div>
             </div>
@@ -23,71 +22,68 @@
           <!--listado-->
           <div class="card-body">
             <div class="form-group row">
-              <div class="col-md-8">
-                <div class="input-group">
-                  <select class="form-control col-md-5" v-model="criterio">
-                    <option value="tipo_identificacion">Tipo identificación</option>
-                    <option value="num_venta">Número Venta</option>
-                    <option value="fecha_venta">Fecha Venta</option>
-                  </select>
-                  <input type="text"  @keyup.enter="listarVenta(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
-                  <button type="submit"  @click="listarVenta(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <select class="form-control col-md-5" v-model="criterio">
+                          <option value="tipo_identificacion">Tipo identificación</option>
+                          <option value="num_cotizacion">Número Cotizacion</option>
+                          <option value="fecha_cotizacion">Fecha Cotizacion</option>
+                        </select>
+                        <input type="text" @keyup.enter="listarCotizacion(1, buscar, criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
+                        <button type="submit" @click="listarCotizacion(1, buscar, criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-striped table-sm text-center">
                 <thead>
-                  <tr class="bg-primary">
+                  <tr class="bg-primary">                      
                     <th>Ver Detalle</th>
-                    <th>Fecha Venta</th>
-                    <th>Número Venta</th>
-                    <th>Cliente</th>
+                    <th>Fecha Cotizacion</th>
+                    <th>Número Cotizacion</th>
+                    <th>Proveedor</th>
                     <th>Tipo de identificación</th>
-                    <th>Vendedor</th>  
-                    <th>Total</th>
-                    <th>Impuesto</th>
+                    <th>Cotizador</th>    <!--<th>Comprador</th>  -->
+                    <th>Valor Total</th>
                     <th>Estado</th>
                     <th>Cambiar estado</th>
                     <th>Descargar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="venta in arrayVenta" :key="venta.id">
+                  <tr v-for="cotizacion in arrayCotizacion" :key="cotizacion.id">
                     <td>
-                      <!--compra.id-->
-                      <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm" title="DETALLE">
+                      <button type="button" @click="verCotizacion(cotizacion.id)" class="btn btn-warning btn-sm" title="DETALLE">
                         <i class="fa fa-eye fa-2x"></i>
                       </button> &nbsp;
                     </td>
-                    <td v-text="venta.fecha_venta"></td>
-                    <td v-text="venta.num_venta"></td>
-                    <td v-text="venta.nombre"></td>
-                    <td v-text="venta.tipo_identificacion"></td> 
-                    <td v-text="venta.usuario"></td> 
-                    <td v-text="'$ '+venta.total"></td>
-                    <td v-text="venta.impuesto * 100 + ' %'"></td>
+                    <td v-text="cotizacion.fecha_cotizacion"></td>
+                    <td v-text="cotizacion.num_cotizacion"></td>
+                    <td v-text="cotizacion.nombre"></td>
+                    <td v-text="cotizacion.tipo_identificacion"></td> 
+                    <td v-text="cotizacion.usuario"></td> 
+                    <td v-text="'$ '+cotizacion.total"></td>
                     <td>                      
-                      <i class="fa fa-check fa-2x" title="REGISTRADO" v-if="venta.estado=='Registrado'"></i>
-                      <i class="fa fa-times fa-2x" title="ANULADO" v-else ></i>                   
+                      <i class="fa fa-check fa-2x" v-if="cotizacion.estado=='Registrado'"></i>                    
+                      <i class="fa fa-times fa-2x" v-else></i>               
                     </td>
                     <td>
-                      <template v-if="venta.estado=='Registrado'">
-                        <button type="button" class="btn btn-danger btn-sm" @click="desactivarVenta(venta.id)">
-                          <i class="fa fa-times fa-2x"></i> Anular Venta
+                      <template v-if="cotizacion.estado=='Registrado'">
+                        <button type="button" class="btn btn-danger btn-sm" @click="desactivarCotizacion(cotizacion.id)">
+                          <i class="fa fa-times fa-2x"></i> Anular Cotizacion
                         </button>
                       </template>
                       <template v-else>
-                          <button type="button" class="btn btn-danger btn-sm">
-                            <i class="fa fa-check fa-2x"></i> Cambiado
-                          </button>
+                        <button type="button" class="btn btn-danger btn-sm">
+                          <i class="fa fa-check fa-2x"></i> Cambiado
+                        </button>
                       </template>
                     </td>
-                    <td>                 
-                      <button type="button" @click="pdfVenta(venta.id)" class="btn btn-info btn-sm">
+                    <td>                              
+                      <button type="button" @click="pdfCotizacion(cotizacion.id)" class="btn btn-info btn-sm">
                         <i class="fa fa-file fa-2x"></i> PDF
                       </button> &nbsp;
-                    </td>  
+                    </td>                     
                   </tr>
                 </tbody>
               </table>
@@ -98,7 +94,7 @@
                   <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Anterior</a>
                 </li>
                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                  <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                 </li>
                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                   <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
@@ -109,25 +105,27 @@
         </template>
         <!--fin listado-->
         <!-- Detalle-->
-        <template v-else-if="listado == 0">         
-          <h3 class="text-center">Registro de Venta</h3>
+        <template v-else-if="listado == 0">
+          
+          <h3 class="text-center">Registro de Cotizacion</h3>
+                          
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="text-uppercase"><strong>Número Venta(*)</strong></label>
-                  <input type="text" class="form-control" v-model="num_venta" placeholder="">
+                  <label class="text-uppercase"><strong>Número Cotizacion(*)</strong></label>
+                  <input type="text" class="form-control" v-model="num_cotizacion" placeholder="">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="text-uppercase"><strong>Cliente(*)</strong></label>
+                  <label class="text-uppercase"><strong>Proveedor(*)</strong></label>
                   <v-select
-                      @search="selectCliente"
+                      @search="selectProveedor"
                       label="nombre"
-                      :options="arrayCliente"
-                      placeholder="Buscar Clientes..."
-                      @input="getDatosCliente" >
+                      :options="arrayProveedor"
+                      placeholder="Buscar Proveedores..."
+                      @input="getDatosProveedor" >
                   </v-select>
                 </div>
               </div>
@@ -137,26 +135,28 @@
                   <select class="form-control" v-model="tipo_identificacion">
                     <option value="0">Seleccione</option>
                     <option value="FACTURA">Factura</option>
-                    <option value="TICKET">Ticket</option>                        
+                    <option value="TICKET">Creo hay que eliminar</option>                  
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
-                <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
-                <input type="text" class="form-control" v-model="impuesto">
-              </div>      
+              <!--<div class="col-md-6">
+                  <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
+                  <input type="text" class="form-control" v-model="impuesto">
+              </div>   -->                       
             </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <div v-show="errorVenta" class="form-group row div-error">
+                <div v-show="errorCotizacion" class="form-group row div-error">
                   <div class="text-center text-error">
-                    <div v-for="error in errorMostrarMsjVenta" :key="error" v-text="error"> </div>
+                    <div v-for="error in errorMostrarMsjCotizacion" :key="error" v-text="error">
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="form-group row border">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Producto <span class="text-error" v-show="idproducto == 0"><small>(*Ingrese código del producto)</small></span></label>
                   <div class="form-inline">
@@ -168,22 +168,16 @@
                   </div>                                    
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <div class="form-group">
-                  <label>Precio <span class="text-error" v-show="precio == 0"><small>(*Ingrese valor)</small></span></label>
+                  <label>Precio <span class="text-error" v-show="precio == 0"><small>(*Ingrese un valor)</small></span></label>
                   <input type="number" value="0" step="any" class="form-control" v-model="precio">
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <div class="form-group">
-                  <label>Cantidad <span class="text-error" v-show="cantidad == 0"><small>(*Ingrese valor)</small></span></label>
+                  <label>Cantidad <span class="text-error" v-show="cantidad == 0"><small>(*Ingrese un valor)</small></span></label>
                   <input type="number" value="0" class="form-control" v-model="cantidad">
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label>Descuento </label>
-                  <input type="number" value="0" class="form-control" v-model="descuento">
                 </div>
               </div>
               <div class="col-md-2">
@@ -192,84 +186,82 @@
                 </div>
               </div>
             </div>
+
             <br/><br/>
             <div class="form-group row border">
-              <h3>Lista de Ventas a Clientes</h3>
+              <h3>Lista de Cotizaciones a Proveedores</h3>
               <div class="table-responsive col-md-12">
-                <table class="table table-bordered table-striped table-sm">
-                  <thead>
-                    <tr class="bg-success">
-                      <th>Eliminar</th>
-                      <th>Producto</th>
-                      <th>Precio</th>
-                      <th>Cantidad</th>
-                      <th>Descuento</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody v-if="arrayDetalle.length">
-                    <tr v-for="(detalle,index) in arrayDetalle" :key="detalle.id">
-                      <td>
-                        <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
-                          <i class="fa fa-times fa-2x"></i>
-                        </button>
-                      </td>
-                      <td v-text="detalle.producto"> </td>
-                      <td>
-                        <input v-model="detalle.precio" type="number" class="form-control">
-                      </td>
-                      <td>
-                        <span style="color:red;" v-show="detalle.cantidad>detalle.stock">Stock: {{detalle.stock}}</span>
-                        <input v-model="detalle.cantidad" type="number" class="form-control">
-                      </td>
-                      <td>
-                        <span style="color:red;" v-show="detalle.descuento>(detalle.precio*detalle.cantidad)">Descuento superior al total</span>
-                        <input v-model="detalle.descuento" type="number" class="form-control">
-                      </td>
-                      <td>{{ detalle.precio * detalle.cantidad - detalle.descuento }}</td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="5" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="5" align="right"><strong>Impuesto:</strong></td>
-                      <td><strong>$ {{ subTotalImpuesto = ( (total * impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
-                    </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="5" align="right"><strong>Total:</strong></td>
-                      <td><strong>$ {{ total = calcularTotal }}</strong></td>
-                    </tr>
-                  </tbody>
-                  <tbody v-else>
-                    <tr>
-                      <td colspan="6"> No se han agregado productos </td>
-                    </tr>
-                  </tbody>                                    
-                </table>
-              </div>
+              <table class="table table-bordered table-striped table-sm">
+                <thead>
+                  <tr class="bg-success">
+                    <th>Eliminar</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody v-if="arrayDetalle.length">
+                  <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
+                    <td>
+                      <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
+                        <i class="fa fa-times fa-2x"></i>
+                      </button>
+                    </td>
+                    <td v-text="detalle.producto"></td>
+                    <td>
+                      <input v-model="detalle.precio" type="number" value="3" class="form-control">
+                    </td>
+                    <td>
+                      <input v-model="detalle.cantidad" type="number" value="2" class="form-control">
+                    </td>
+                    <td>
+                      {{ detalle.precio * detalle.cantidad }}
+                    </td>
+                  </tr>
+                  <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
+                    <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
+                  </tr>
+                  <!-- <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Impuesto:</strong></td>
+                    <td><strong>$ {{ subTotalImpuesto = ( (total*impuesto) / (1 + impuesto) ).toFixed(2) }}</strong></td>
+                  </tr> -->
+                  <tr style="background-color: grey;">
+                    <td colspan="4" align="right"><strong>Total:</strong></td>
+                    <td><strong>$ {{ total = calcularTotal }}</strong></td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="5"> No se han agregado productos </td>
+                  </tr>
+                </tbody>                                    
+              </table>
             </div>
+          </div>
+
             <div class="form-group row">
               <div class="col-md-12">
                 <button type="button" class="btn btn-danger" @click="ocultarDetalle()"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                <button type="button" class="btn btn-success" @click="registrarVenta()"><i class="fa fa-save fa-2x"></i> Registrar Venta</button>
+                <button type="button" class="btn btn-success" @click="registrarCotizacion()"><i class="fa fa-save fa-2x"></i> Registrar Cotizacion</button>
                 <span>
                   <strong>(*) Campo obligatorio</strong>
                 </span><br/>
-              </div>              
+              </div>
             </div>
           </div>
         </template>
         <!-- Fin Detalle--> 
-        <!-- Ver Venta -->
-        <template v-else-if="listado==2">
-          <h2 class="text-center">Detalle de Venta</h2><br/>
+        <template v-else-if="listado == 2">
+          <h2 class="text-center">Detalle de Cotizacion</h2><br/>
+  
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="text-uppercase"><strong>Cliente</strong></label>
-                  <p v-text="cliente"></p>
+                  <label class="text-uppercase"><strong>Proveedor</strong></label>
+                  <p v-text="proveedor"></p>
                 </div>
               </div>
               <div class="col-md-3">
@@ -277,19 +269,19 @@
                   <label class="text-uppercase"><strong>Tipo de identificación</strong></label>
                   <p v-text="tipo_identificacion"></p>
                 </div>
-              </div>    
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="text-uppercase"><strong>Número Venta</strong></label>
-                  <p v-text="num_venta"></p>
-                </div>
               </div>
               <div class="col-md-3">
+                <div class="form-group">
+                  <label class="text-uppercase"><strong>Número Cotizacion</strong></label>
+                  <p v-text="num_cotizacion"></p>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
                 <div class="form-group">
                   <label class="text-uppercase"><strong>Impuesto</strong></label>
                   <p v-text="impuesto"></p>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="form-group row border">
               <div class="table-responsive col-md-12">
@@ -299,34 +291,32 @@
                       <th>Producto</th>
                       <th>Precio</th>
                       <th>Cantidad</th>
-                      <th>Descuento</th>
                       <th>Total</th>
                     </tr>
                   </thead>
                   <tbody v-if="arrayDetalle.length">
                     <tr v-for="detalle in arrayDetalle" :key="detalle.id">
-                      <td v-text="detalle.producto"> </td>
-                      <td v-text="detalle.precio"> </td>
-                      <td v-text="detalle.cantidad"> </td>
-                      <td v-text="detalle.descuento"> </td>
-                      <td>{{ detalle.precio * detalle.cantidad - detalle.descuento }} </td>
+                      <td v-text="detalle.producto"></td>
+                      <td v-text="detalle.precio"></td>
+                      <td v-text="detalle.cantidad"></td>
+                      <td> {{ detalle.precio * detalle.cantidad }} </td>
                     </tr>
                     <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                      <td><strong>$ {{ subTotal = (total - subTotalImpuesto).toFixed(2) }}</strong></td>
+                      <td colspan="3" align="right"><strong>Sub-Total:</strong></td>
+                      <td><strong>$ {{ subTotal=(total - subTotalImpuesto).toFixed(2) }}</strong></td>
                     </tr>
-                    <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Impuesto:</strong></td>
+                    <!-- <tr style="background-color: grey;">
+                      <td colspan="3" align="right"><strong>Impuesto:</strong></td>
                       <td><strong>$ {{ subTotalImpuesto = ((total * impuesto)).toFixed(2) }}</strong></td>
-                    </tr>
+                    </tr> -->
                     <tr style="background-color: grey;">
-                      <td colspan="4" align="right"><strong>Total:</strong></td>
+                      <td colspan="3" align="right"><strong>Total:</strong></td>
                       <td><strong>$ {{ total }}</strong></td>
                     </tr>
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="5"> No se han agregado productos </td>
+                      <td colspan="4"> No se han agregado productos </td>
                     </tr>
                   </tbody>                                    
                 </table>
@@ -335,18 +325,15 @@
             <div class="form-group row">
               <div class="col-md-12">
                 <button type="button" @click="ocultarDetalle()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                <button class="btn btn-success btn-lg" type="button" @click="cargarPdf()">
-                <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Reporte PDF
-              </button>
               </div>
             </div>
-          </div>            
+          </div>
         </template>
-        <!-- fin ver venta-->
+        <!-- fin ver compra-->
+
       </div>
       <!-- Fin ejemplo de tabla Listado -->
     </div>
-
     <!--Inicio del modal agregar/actualizar-->
     <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -356,9 +343,8 @@
             <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-          </div>
+          </div>                       
           <div class="modal-body">
-
             <div class="form-group row">
               <div class="col-md-8">
                 <div class="input-group">
@@ -366,15 +352,16 @@
                     <option value="nombre">Producto</option>
                     <option value="codigo">Código</option>
                   </select>
-                  <input type="text"  @keyup.enter="listarProducto(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar texto">
-                  <button type="submit"  @click="listarProducto(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                  <input type="text" @keyup.enter="listarProducto(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar texto">
+                  <button type="submit" @click="listarProducto(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                 </div>
               </div>
             </div>
+                            
             <div class="table-responsive">
               <table class="table table-bordered table-striped table-sm text-center">
                 <thead>
-                  <tr class="bg-primary">                    
+                  <tr class="bg-primary">              
                     <th>Categoria</th>
                     <th>Producto</th>
                     <th>Codigo</th>
@@ -385,8 +372,8 @@
                     <th>Acción</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="producto in arrayProducto" :key="producto.id">              
+                <tbody>                
+                  <tr v-for="producto in arrayProducto" :key="producto.id">
                     <td v-text="producto.nombre_categoria"></td>
                     <td v-text="producto.nombre"></td>
                     <td v-text="producto.codigo"></td>
@@ -395,19 +382,19 @@
                     <td>
                       <img :src="'img/producto/'+producto.imagen" class="img-responsive" width="50px" height="50px">
                     </td>
-                    <td>                     
-                      <i class="fa fa-unlock fa-2x" v-if="producto.condicion"></i>                    
-                      <i class="fa fa-lock fa-2x" v-else></i>                 
+                    <td>                      
+                      <i class="fa fa-unlock fa-2x" v-if="producto.condicion"></i>                      
+                      <i class="fa fa-lock fa-2x" v-else></i>                         
                     </td>
                     <td>
                       <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-primary btn-sm">
-                        <i class="fa fa-plus fa-2x"></i> Agregar 
+                      <i class="fa fa-plus fa-2x"></i> Agregar 
                       </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div>      
           </div>
           <div class="modal-footer">
             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
@@ -429,46 +416,44 @@
   export default {
     data(){
       return {
-        venta_id : 0,
-        idcliente : 0,
-        cliente : '',
+        cotizacion_id : 0,
+        idproveedor : 0,
+        proveedor : '',
+        nombre : '',
         tipo_identificacion : 'FACTURA',
-        num_venta : '',
+        num_cotizacion : '',
         impuesto : 0.18,
         total : 0.0,
         subTotalImpuesto : 0.0,
         subTotal : 0.0,
-        arrayVenta : [],
-        arrayCliente : [],
+        arrayCotizacion : [],
+        arrayProveedor : [],
         arrayDetalle : [],
         listado : 1,
         modal : 0,
         tituloModal : '',
         tipoAccion : 0,
-        errorVenta : 0,
-        errorMostrarMsjVenta : [],
-        pagination : {
-            'total': 0,
-            'current_page': 0,
-            'per_page': 0,
-            'last_page': 0,
-            'from': 0,
-            'to': 0,
-    
+        errorCotizacion : 0,
+        errorMostrarMsjCotizacion : [],
+        pagination:{            
+          'total': 0,
+          'current_page': 0,
+          'per_page': 0,
+          'last_page': 0,
+          'from': 0,
+          'to': 0,
         },
-        offset:3,
-        criterio:'num_venta',
-        buscar:'',
-        criterioP:'nombre',
+        offset: 3,
+        criterio:'num_cotizacion',
+        buscar: '',
+        criterioP: 'nombre',
         buscarP: '',
         arrayProducto: [],
         idproducto: 0,
         codigo: '',
         producto: '',
         precio: 0,
-        cantidad:0,
-        descuento:0,
-        stock:0
+        cantidad:0
       }
 
     },
@@ -502,95 +487,91 @@
       },
       calcularTotal: function(){
         var resultado = 0.0;
-        for( var i=0; i < this.arrayDetalle.length; i++){
-          resultado = resultado + (this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad - this.arrayDetalle[i].descuento)
+        for(var i = 0; i < this.arrayDetalle.length; i++){
+          resultado = resultado + (this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad)
         }
         return resultado;
       }
     },
 
     methods:{
-      listarVenta(page,buscar,criterio){
+      listarCotizacion(page, buscar, criterio){
         let me = this;
-        var url = '/venta?page=' + page + '&buscar='+ buscar + '&criterio=' + criterio;
+        var url = '/cotizacion?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
         axios.get(url).then(function (response) {
           var respuesta = response.data;
-          me.arrayVenta = respuesta.ventas.data;
+          me.arrayCotizacion = respuesta.cotizaciones.data;
           me.pagination = respuesta.pagination;
         })
         .catch(function (error) {
           console.log(error);
         });
       },
-      selectCliente(search, loading){
+
+      selectProveedor(search, loading){
         let me = this;
         loading(true)
-        var url = '/cliente/selectCliente?filtro=' + search;
+        var url= '/proveedor/selectProveedor?filtro='+search;
         axios.get(url).then(function (response) {
           let respuesta = response.data;
           q: search
-          me.arrayCliente = respuesta.clientes;
+          me.arrayProveedor = respuesta.proveedores;
           loading(false)
         })
         .catch(function (error) {
           console.log(error);
         });
       },
-
-      getDatosCliente(val1){
+      getDatosProveedor( val1 ){
         let me = this;
         me.loading = true;
-        me.idcliente = val1.id;
+        me.idproveedor = val1.id;
       },
-
       buscarProducto(){
         let me = this;
-        var url = '/producto/buscarProductoVenta?filtro=' + me.codigo;
+        var url = '/producto/buscarProducto?filtro=' + me.codigo;
+
         axios.get(url).then(function (response) {
           var respuesta = response.data;
           me.arrayProducto = respuesta.productos;
           if( me.arrayProducto.length > 0 ){
             me.producto = me.arrayProducto[0]['nombre'];
             me.idproducto = me.arrayProducto[0]['id'];
-            me.precio = me.arrayProducto[0]['precio_venta'];
-            me.stock = me.arrayProducto[0]['stock'];
           }
           else{
             me.producto = 'No existe el producto';
             me.idproducto = 0;
           }
         })
-        .catch( function (error) {
+        .catch(function (error) {
           console.log(error);
         });
       },
-      pdfVenta(id){
-        //alert(window.location.host);
-        window.open('http://tienda.dyi.cl/venta/pdf/'+id+','+ '_blank');
-      },
+      /* pdfCompra(id){
+        window.open('http://tienda.dyi.cl/compra/pdf/'+id+','+ '_blank');
+      }, */
 
       cambiarPagina(page, buscar, criterio){     
         let me = this;
         //Actualiza  la pagina actual
         me.pagination.current_page = page;
-        me.listarCompra(page,buscar,criterio);
+        me.listarCotizacion(page, buscar, criterio);
       },
 
-
-      encuentra( id ){
+      encuentra(id){
         var sw = 0;
-        for( var i=0; i < this.arrayDetalle.length; i++){
+        for(var i = 0; i < this.arrayDetalle.length; i++){
           if( this.arrayDetalle[i].idproducto == id ){
             sw = true;
           }
         }
         return sw;
       },
+
       eliminarDetalle(index){
         let me = this;
         me.arrayDetalle.splice(index, 1);
       },
-
       agregarDetalle(){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
@@ -600,44 +581,32 @@
           buttonsStyling: false
         })
         let me = this;
-        if( me.idproducto==0 || me.cantidad==0 || me.precio==0 ){
-        } else {
-          if(me.encuentra(me.idproducto)){
+        if( me.idproducto == 0 || me.cantidad == 0 || me.precio == 0 ){
+        }
+        else{
+          if( me.encuentra(me.idproducto) ){
             swalWithBootstrapButtons.fire({
               type: 'error',
               title: 'Error...',
               text: 'Ese producto ya fue agregado',
             })
-          } else {
-            if( me.cantidad>me.stock ){
-              swalWithBootstrapButtons.fire({
-                type: 'error',
-                title: 'Error...',
-                text: 'No hay stock disponible',
-              })
-            } else {
-              me.arrayDetalle.push({
-                  idproducto: me.idproducto,
-                  producto: me.producto,
-                  cantidad: me.cantidad,
-                  precio: me.precio,
-                  descuento: me.descuento,
-                  stock: me.stock
-              });
-              me.codigo = "";
-              me.idproducto = 0;
-              me.producto = "";
-              me.cantidad = 0;
-              me.precio = 0;
-              me.descuento = 0;
-              me.stock = 0
-            }
           }
-        }
+          else{
+            me.arrayDetalle.push({
+              idproducto: me.idproducto,
+              producto: me.producto,
+              cantidad: me.cantidad,
+              precio: me.precio
+            });
+            me.codigo = "";
+            me.idproducto = 0;
+            me.producto = "";
+            me.cantidad = 0;
+            me.precio = 0; 
+          }
+        }             
       },
-
-
-      agregarDetalleModal( data=[] ){
+      agregarDetalleModal( data = [] ){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-success',
@@ -645,29 +614,27 @@
           },
           buttonsStyling: false
         })
-        let me=this;
+        let me = this;
         if(me.encuentra(data['id'])){
           swalWithBootstrapButtons.fire({
             type: 'error',
             title: 'Error...',
             text: 'Ese producto ya fue agregado',
           })
-        } else {
+        }
+        else{
           me.arrayDetalle.push({
-              idproducto: data['id'],
-              producto: data['nombre'],
-              cantidad: 1,
-              precio: data['precio_venta'],
-              descuento:0,
-              stock:data['stock']
+            idproducto: data['id'],
+            producto: data['nombre'],
+            cantidad: 1,
+            precio: 1
           }); 
         }
       },
 
-
-      listarProducto(buscar, criterio){
-        let me=this;
-        var url= '/producto/listarProductoVenta?buscar='+ buscar + '&criterio='+ criterio;
+      listarProducto (buscar,criterio){
+        let me = this;
+        var url = '/producto/listarProducto?buscar='+ buscar + '&criterio='+ criterio;
         axios.get(url).then(function (response) {
           var respuesta= response.data;
           me.arrayProducto = respuesta.productos.data;
@@ -677,64 +644,52 @@
         });
       },
 
-      registrarVenta(){
-        if(this.validarVenta()){
+      registrarCotizacion(){
+        if( this.validarCotizacion() ){
           return;
         }
         let me = this;
-        axios.post('/venta/registrar',{
-          'idcliente': this.idcliente,
+        axios.post('/cotizacion/registrar',{
+          'idproveedor': this.idproveedor,
           'tipo_identificacion': this.tipo_identificacion,
-          'num_venta' : this.num_venta,
+          'num_cotizacion' : this.num_cotizacion,
           'impuesto' : this.impuesto,
           'total' : this.total,
           'data': this.arrayDetalle
         }).then(function (response) {
           me.listado = 1;
-          me.listarVenta(1, '', 'num_venta');
-          me.idcliente = 0;
+          me.listarCotizacion(1,'','num_cotizacion');
+          me.idproveedor = 0;
           me.tipo_identificacion = 'FACTURA';
-          me.num_venta = '';
+          me.num_cotizacion = '';
           me.impuesto = 0.18;
           me.total = 0.0;
           me.idproducto = 0;
           me.producto = '';
           me.cantidad = 0;
           me.precio = 0;
-          me.stock = 0;
-          me.codigo = '';
-          me.descuento = 0;
           me.arrayDetalle = [];
         }).catch(function (error) {
-          console.log(error);
+            console.log(error);
         });
       },
 
-      validarVenta(){
-        let me = this;
-        me.errorVenta = 0;
-        me.errorMostrarMsjVenta = [];
-        var prod;
-        me.arrayDetalle.map(function(x){
-          if( x.cantidad>x.stock ){
-            prod = x.producto + " con stock insuficiente";
-            me.errorMostrarMsjVenta.push(prod);
-          }
-        });
-        if( me.idcliente == 0 ) me.errorMostrarMsjVenta.push("Seleccione un Cliente");
-        if( me.tipo_identificacion == 0 ) me.errorMostrarMsjVenta.push("Seleccione la identificación");
-        if( !me.num_venta ) me.errorMostrarMsjVenta.push("Ingrese el número de venta");
-        if( !me.impuesto ) me.errorMostrarMsjVenta.push("Ingrese el impuesto de venta");
-        if( me.arrayDetalle.length <= 0 ) me.errorMostrarMsjVenta.push("Ingrese detalles");
-        if( me.errorMostrarMsjVenta.length ) me.errorVenta = 1;
-        return me.errorVenta;
+      validarCotizacion(){
+        this.errorCotizacion = 0;
+        this.errorMostrarMsjCotizacion = [];
+        if (this.idproveedor == 0) this.errorMostrarMsjCotizacion.push("Seleccione un Proveedor");
+        if (this.tipo_identificacion == 0) this.errorMostrarMsjCotizacion.push("Seleccione la identificación");
+        if (!this.num_cotizacion) this.errorMostrarMsjCotizacion.push("Ingrese el número de cotizacion");
+        if (this.arrayDetalle.length <= 0) this.errorMostrarMsjCotizacion.push("Ingrese detalles");
+        if (this.errorMostrarMsjCotizacion.length) this.errorCotizacion = 1;
+        return this.errorCotizacion;
       },
       mostrarDetalle(){
-        let me = this;       
+        let me = this;
         me.listado = 0;
         me.idproveedor = 0;
         me.tipo_identificacion = 'FACTURA';
-        me.num_compra = '';
+        me.num_cotizacion = '';
         me.impuesto = 0.18;
         me.total = 0.0;
         me.idproducto = 0;
@@ -746,43 +701,43 @@
       ocultarDetalle(){
         this.listado = 1;
       },
-      verVenta(id){
+      verCotizacion(id){
         let me = this;
         me.listado = 2;
-        var arrayVentaT = [];
-        var url = '/venta/obtenerCabecera?id=' + id;
+        var arrayCotizacionT = [];
+        var url = '/cotizacion/obtenerCabecera?id=' + id;
         axios.get(url).then(function (response) {
           var respuesta = response.data;
-          arrayVentaT = respuesta.venta;
-          me.cliente = arrayVentaT[0]['nombre'];
-          me.tipo_identificacion = arrayVentaT[0]['tipo_identificacion'];
-          me.num_venta = arrayVentaT[0]['num_venta'];
-          me.impuesto = arrayVentaT[0]['impuesto'];
-          me.total = arrayVentaT[0]['total'];
+          arrayCotizacionT = respuesta.cotizacion;
+          me.proveedor = arrayCotizacionT[0]['nombre'];
+          me.tipo_identificacion = arrayCotizacionT[0]['tipo_identificacion'];
+          me.num_cotizacion = arrayCotizacionT[0]['num_cotizacion'];
+          me.total = arrayCotizacionT[0]['total'];
         })
         .catch(function (error) {
-          console.log(error);
+            console.log(error);
         });
-        var urld = '/venta/obtenerDetalles?id=' + id;
+        //Obtener los datos de los detalles 
+        var urld = '/cotizacion/obtenerDetalles?id='+id;        
         axios.get(urld).then(function (response) {
-          console.log(response);
-          var respuesta = response.data;
-          me.arrayDetalle = respuesta.detalles;
+            console.log(response);
+            var respuesta= response.data;
+            me.arrayDetalle = respuesta.detalles;
         })
         .catch(function (error) {
-          console.log(error);
+            console.log(error);
         });     
       },
       cerrarModal(){
         this.modal = 0;
-        this.tituloModal = '';
+        this.tituloModal = '';      
       },
-      abrirModal(){            
-        this.arrayProducto=[];
+      abrirModal(){
+        this.arrayProducto = [];
         this.modal = 1;
-        this.tituloModal = 'Seleccione uno o varios productos';                            
+        this.tituloModal = 'Seleccione uno o varios productos';                        
       },
-      desactivarVenta(id){
+      desactivarCotizacion(id){
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-success',
@@ -791,7 +746,7 @@
           buttonsStyling: false
         })
         swalWithBootstrapButtons.fire({
-          title: 'Esta seguro de anular la venta?',
+          title: 'Esta seguro de anular la cotizacion?',
           //type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -805,58 +760,62 @@
         }).then((result) => {
           if (result.value) {
             let me = this;
-            axios.put('/venta/desactivar',{
-                'id': id
+            axios.put('/cotizacion/desactivar',{
+              'id': id
             }).then(function (response) {
-              me.listarVenta(1,'','num_venta');
+              me.listarCotizacion(1,'','num_cotizacion');
               swalWithBootstrapButtons.fire(
                 'Anulado!',
-                'La venta ha sido anulada con éxito.',
+                'La cotizacion ha sido anulada con éxito.',
                 'success'
               )
             }).catch(function (error) {
                 console.log(error);
             });
-          } else if (
+          } else if (     
             result.dismiss === swal.DismissReason.cancel
-          ) {     
+          ) {
+              
           }
         }) 
-      },
+      }
     },
+        
     mounted() {
-      this.listarVenta(1, this.buscar, this.criterio);
+      this.listarCotizacion(1, this.buscar, this.criterio);
     }
   }
 </script>
 
 <style>
   .modal-content{
-    width : 100% !important;
-    position : absolute !important;
+    width:100% !important;
+    position:absolute !important;
   }
 
   .mostrar{
-    display : list-item !important;
-    opacity : 1 !important;
-    position : absolute !important;
-    background-color : #3c29297a !important;
+    display:list-item !important;
+    opacity:1 !important;
+    position:absolute !important;
+    background-color: #3c29297a !important;
   }
 
   .div-error{
-    display : flex;
-    justify-content : center;
+    display:flex;
+    justify-content:center;
   }
 
   .text-error{
-    color : red !important;
-    font-weight : bold;
-    font-size : 20px;
+    color: red !important;
+    font-weight: bold;
+    font-size: 20px;
   }
 
-  @media (min-width: 600px) {
-    .btnagregar {
-      margin-top : 2rem;
+  @media( min-width: 600px ){
+    .btnagregar{
+      margin-top: 2rem;
     }
   }
+
+
 </style>

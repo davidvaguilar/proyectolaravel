@@ -17,7 +17,9 @@
       <li @click="menu=6" class="nav-item">
         <a class="nav-link" href="#"><i class="fa fa-users"></i> Clientes</a>
       </li>        
-            
+      <li @click="menu=9" class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-list"></i> Cotizaciones</a>
+      </li>  
     </ul>
   </nav>
   <button class="sidebar-minimizer brand-minimizer" type="button"></button>

@@ -28,7 +28,10 @@
       </li>
       <li @click="menu=8" class="nav-item">
         <a class="nav-link" href="#"><i class="fa fa-list"></i> Roles</a>
-      </li>           
+      </li>      
+      <li @click="menu=9" class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-list"></i> Cotizaciones</a>
+      </li>       
     </ul>
   </nav>
   <button class="sidebar-minimizer brand-minimizer" type="button"></button>

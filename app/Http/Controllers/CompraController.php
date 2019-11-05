@@ -108,7 +108,6 @@ class CompraController extends Controller
             $compra->save();
 
             $detalles = $request->data;
-
             foreach( $detalles  as $a => $det ){
                 $detalle = new DetalleCompra();
                 $detalle->idcompra = $compra->id;
@@ -118,11 +117,9 @@ class CompraController extends Controller
                 $detalle->save();
             }
             DB::commit();
-
         } catch (Exception $e) {
             DB::rollBack();
         }
-
     }
 
     public function desactivar( Request $request ){

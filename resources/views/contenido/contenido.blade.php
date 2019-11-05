@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-  @if( Auth::check() )
+  @if( Auth::check() ) 
     @if( Auth::user()->idrol == 1 )        
       <template v-if="menu==0">
         <dashboard></dashboard>
@@ -30,6 +30,9 @@
       </template>
       <template v-if="menu==8">
         <rol></rol>
+      </template>
+      <template v-if="menu==9">
+        <cotizacion></cotizacion>
       </template>
 
     @elseif( Auth::user()->idrol == 2 )
@@ -64,6 +67,9 @@
       </template>
       <template v-if="menu==4">
         <proveedor></proveedor>
+      </template>
+      <template v-if="menu==9">
+        <cotizacion></cotizacion>
       </template>
     @else
     @endif

@@ -1,10 +1,13 @@
 composer create-project --prefer-dist laravel/laravel proyectolaravel "5.5.*"
 
 php artisan make:migration create_categorias_table
+php artisan make:migration create_detalle_cotizaciones_table
 
 php artisan make:model Categoria
+php artisan make:model DetalleCotizacion
 
 php artisan make:controller CategoriaController --resource
+php artisan make:controller CotizacionController
 
 php artisan make:seeder ClientesTableSeeder
 

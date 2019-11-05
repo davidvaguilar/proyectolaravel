@@ -61,13 +61,6 @@ class CategoriaController extends Controller
         $categoria->save();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         if( !$request->ajax()) return redirect('/');

@@ -112,7 +112,6 @@
                 <label class="col-md-3 form-control-label" for="text-input">Categoría</label>
                 <div class="col-md-9">
                     <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de categoría">
-                    
                 </div>
               </div>
               <div class="form-group row">

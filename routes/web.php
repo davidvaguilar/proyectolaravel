@@ -53,7 +53,6 @@ Route::group(['middleware' =>['auth']], function(){
         Route::get('/compra/obtenerCabecera', 'CompraController@obtenerCabecera');
         Route::get('/compra/obtenerDetalles', 'CompraController@obtenerDetalles');
         Route::get('/compra/pdf/{id}', 'CompraController@pdf')->name('compra_pdf');
-
     });
 
     Route::group(['middleware' =>['Vendedor']], function(){
@@ -83,7 +82,6 @@ Route::group(['middleware' =>['auth']], function(){
         Route::get('/venta/obtenerCabecera', 'VentaController@obtenerCabecera');
         Route::get('/venta/obtenerDetalles', 'VentaController@obtenerDetalles');
         Route::get('/venta/pdf/{id}', 'VentaController@pdf')->name('venta_pdf');
-        
     });
 
     Route::group(['middleware' =>['Administrador']], function(){
@@ -137,13 +135,16 @@ Route::group(['middleware' =>['auth']], function(){
         Route::put('/usuario/actualizar', 'UserController@update');
         Route::put('/usuario/desactivar', 'UserController@desactivar');
         Route::put('/usuario/activar', 'UserController@activar');
-    });
 
-    
+        Route::get('/cotizacion', 'CotizacionController@index');
+        Route::post('/cotizacion/registrar', 'CotizacionController@store');
+        Route::put('/cotizacion/desactivar', 'CotizacionController@desactivar');
+        Route::get('/cotizacion/obtenerCabecera', 'CotizacionController@obtenerCabecera');
+        Route::get('/cotizacion/obtenerDetalles', 'CotizacionController@obtenerDetalles');
+    });
 
 });
 
 //Auth::routes();
-
 
 Route::get('/home', 'HomeController@index')->name('home');
