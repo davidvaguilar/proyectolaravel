@@ -566,7 +566,7 @@
       },
       pdfVenta(id){
         //alert(window.location.host);
-        window.open('http://tienda.dyi.cl/venta/pdf/'+id+','+ '_blank');
+        window.open('http://' + window.location.host + '/venta/pdf/'+id , '_blank');
       },
 
       cambiarPagina(page, buscar, criterio){     

@@ -271,7 +271,8 @@
       },
       cargarPdf(){
         //alert(window.location.host);
-        window.open('http://tienda.dyi.cl/producto/listarPdf', '_blank');
+        window.open('http://' + window.location.host + '/producto/listarPdf', '_blank');
+       // window.open('http://totty.dyi.cl/producto/listarPdf', '_blank');
       },
       selectCategoria(){
         let me = this;

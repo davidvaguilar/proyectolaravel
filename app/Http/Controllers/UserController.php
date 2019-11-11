@@ -87,7 +87,7 @@ class UserController extends Controller
         $usuario->password = bcrypt($request->password);
         $usuario->idrol = $request->idrol;
         //Editar imagen
-        $currentPhoto = $user->imagen; 
+        $currentPhoto = $usuario->imagen; 
         if( $request->imagen != $currentPhoto ){
             $exploded = explode(',',$request->imagen);
             $decoded = base64_decode($exploded[1]);
@@ -105,7 +105,7 @@ class UserController extends Controller
                 @unlink($usuarioImagen);
             }
             /*fin eliminar del servidor*/
-            $user->imagen = $fileName;
+            $usuario->imagen = $fileName;
         }
         //fin editar imagen
         $usuario->save();

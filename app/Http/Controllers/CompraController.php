@@ -86,7 +86,8 @@ class CompraController extends Controller
 
         $numcompra = Compra::select('num_compra')->where('id',$id)->get();        
         $pdf= \PDF::loadView('pdf.compra',['compra'=>$compra,'detalles'=>$detalles]);
-        return $pdf->download('compra-'.$numcompra[0]->num_compra.'.pdf');
+        return $pdf->stream('compra-'.$numcompra[0]->num_compra.'.pdf'); 
+                // $pdf->download('compra-'.$numcompra[0]->num_compra.'.pdf');
     }
 
     public function store(Request $request)

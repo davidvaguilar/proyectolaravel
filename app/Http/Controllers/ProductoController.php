@@ -87,7 +87,7 @@ class ProductoController extends Controller
         $cont = Producto::count();
         $pdf = \PDF::loadView('pdf.productospdf', ['productos' => $productos, 'cont'=> $cont]);
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream('productos.pdf'); //->download('productos.pdf');
+        return $pdf->stream('productos.pdf'); //->stream('productos.pdf');
     }
 
     public function buscarProducto(Request $request){
