@@ -8,7 +8,7 @@
         <form class="form-horizontal was-validated" method="POST" action="{{ route('login') }}">
           {{ csrf_field() }}
           <div class="card-body">
-            <h3 class="text-center bg-success">Compras - Ventas</h3>
+            <h3 class="text-center bg-success">{{ config('app.name', 'Laravel') }}</h3><!-- Compras - Ventas-->
             
             <div class="form-group mb-3 {{ $errors->has('usuario' ? 'is-invalid' : '') }}">
               <span class="input-group-addon"><i class="icon-user"></i></span>

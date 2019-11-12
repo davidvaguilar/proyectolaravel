@@ -72,9 +72,8 @@
         <cotizacion></cotizacion>
       </template>
     @else
+    
     @endif
   @endif
-
-
 
 @endsection
